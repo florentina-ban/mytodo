@@ -1,4 +1,5 @@
 import React from "react";
+import "./item.css"
 
 export default class Item extends React.Component{
     constructor(props){
@@ -6,10 +7,9 @@ export default class Item extends React.Component{
      };
     render(){
         return(
-        <div className="item">
-            <p>{this.props.id} {this.props.text} {this.props.status} </p>
+        <div>
+            <p><strong>{this.props.id}</strong> {this.props.text} {this.props.status} </p>
         </div>
         );
     };
 }
-

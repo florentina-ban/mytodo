@@ -1,6 +1,35 @@
+
 .item{
   background-color: chartreuse;  
-  color: darkred;
-  block-size: 0.7cm;
-
+  color: darkgreen;
+  
+  width: 40%;
+  margin: auto;
+  padding: 10px;
+  
+}
+.item_p{
+    background-color: gray;  
+    color: darkred;
+    
+    width: 40%;
+    margin: auto;
+    padding: 10px;
+    
+  }
+.myCss{
+  
+    text-align: center;
+    font: normal 12px sans-serif;
+    border-top: 4px red solid;
+    
+}
+.lista{
+    list-style-type: none;
+}
+.titlu{
+    background-color: rgb(211, 200, 200);
+    width: 40%;
+    margin: auto;
+    padding: 10px;
 }

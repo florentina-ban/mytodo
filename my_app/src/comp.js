@@ -3,10 +3,6 @@ import Item from './item.js';
 import './item.css'
 
 export default class Layout extends React.Component{
-    constructor(){
-        super();
-        this.state={name:"flore",age:45};
-    }
     render(){
         var idVar,textVar,statusVar;
         var list=[];
@@ -25,16 +21,21 @@ export default class Layout extends React.Component{
         return(
             <div>
                 <h1>aici trebie sa tiparim lista: </h1>
-                <p>
-                {list}
-                </p>
-                <Header />
+                <ul className="lista">
+                    <h4 className="titlu">tiltlul listei</h4>
+                    <br></br>
+
+                    <li class="item_p">{list[0]}</li>
+                    <li class="item">{list[1]}</li>
+                    <li class="item_p">{list[2]}</li>
+                    <li class="item">{list[3]}</li>
+                </ul>
+                    
             </div>
         );
     }
 
 }
-
 
 export class Header extends React.Component{
 
