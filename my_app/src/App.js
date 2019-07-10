@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Layout from "./comp.js";
+//import './list.css';
 
 function App() {
   return (
@@ -16,11 +18,13 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          :((((((((((((((()))))))))))))))
         </a>
       </header>
+      <Layout />
+
     </div>
   );
 }
+
 
 export default App;
