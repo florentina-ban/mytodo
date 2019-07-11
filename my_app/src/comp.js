@@ -25,9 +25,9 @@ export default class Layout extends React.Component{
                     <h4 className="titlu">tiltlul listei</h4>
                     <br></br>
 
-                    <li class="item_p">{list[0]}</li>
+                    <li class="item">{list[0]}</li>
                     <li class="item">{list[1]}</li>
-                    <li class="item_p">{list[2]}</li>
+                    <li class="item">{list[2]}</li>
                     <li class="item">{list[3]}</li>
                 </ul>
                     

@@ -8,15 +8,6 @@
   padding: 10px;
   
 }
-.item_p{
-    background-color: gray;  
-    color: darkred;
-    
-    width: 40%;
-    margin: auto;
-    padding: 10px;
-    
-  }
 .myCss{
   
     text-align: center;
@@ -26,6 +17,10 @@
 }
 .lista{
     list-style-type: none;
+}
+.lista li:nth-child(even){
+    background: gray;
+
 }
 .titlu{
     background-color: rgb(211, 200, 200);
