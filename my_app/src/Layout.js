@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Item from './Item.js';
-import Checkbox from'./Checkbox.js'
+import Checkbox from './Item.js'
 
 export default class Layout extends Component{
     render(){
@@ -11,12 +11,13 @@ export default class Layout extends Component{
             var a=i+1;
             idVar='todo'+a;
             textVar='todo'+a+'text';
-            if (i%2===0)
+            if (i%2===0){
                 statusVar='todo';
-                else
+            }
+                else{
                 statusVar='in progres';
-            var ceck=<Checkbox id={idVar+'c'}/>
-            it1= <Item id={idVar} text={textVar} status={statusVar} ck={ceck}/>;
+            }
+        it1= <Item id={idVar} text={textVar} status={statusVar} />;
             list.push(it1);
             }
         return(
@@ -25,7 +26,6 @@ export default class Layout extends Component{
                 <ul className="lista">
                     <h4 className="titlu">tiltlul listei</h4>
                     <br></br>
-                    jdchbschbasn gsg
                     {list}
                 </ul>
                     
@@ -33,13 +33,4 @@ export default class Layout extends Component{
         );
     }
 
-}
-
-export class Header extends React.Component{
-
-    render(){
-        return(
-            <h1>this is me</h1>
-        );
-    }
 }

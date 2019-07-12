@@ -5,20 +5,53 @@ import { throwStatement, thisExpression } from "@babel/types";
 export default class Item extends React.Component{
     constructor(props){
         super(props);
-        this.isChecked=false;
-        this.state={className:"nck"};
-     };
-     action = () =>{
+        this.li_ref=null;
+        this.ck_ref=null;
+        this.auto_ref=React.createRef();
+        this.state={className:"nck" };
 
+     };
+     action = () => {
+            if (this.ck_ref.current.props.isChecked===true)
+                this.setState({className:"ck"},()=>{});
+            else
+                this.setState({className:"nck"},()=>{});
+     };
+     componentDidMount(){
+        
      }
     render(){
-        var namecheck=this.props.id;
         return(
-            <li className={this.state.className}> 
-                <strong>{this.props.id}</strong> {this.props.text} {this.props.status} 
-                <this.ck />
-                <br></br>
-            </li>
+            <li className={this.state.className} ref={(li)=>{this.li_ref=li}}> 
+                <Checkbox id={this.props.id+'c'} ref_la_item={this.auto_ref} ref={(Checkbox)=>{this.ck_ref=Checkbox}} />                   
+                <strong>{this.props.id}  &nbsp; </strong> {this.props.text}  &nbsp;   {this.props.status}
+              </li>
             );
     };
+}
+export class Checkbox extends React.Component{
+    constructor(props){
+        super(props);
+        const a=this.props.ref_la_item.current;
+        this.ref_la_item_c=a;
+        this.state={isChecked:false}
+        this.action=this.action.bind(this);
+    }
+
+    action () {
+        this.setState({isChecked: !this.state.isChecked},  () => {});
+        this.ref_la_item_c.action();
+        
+    }
+    componentDidMount(){
+      //  this.ck_ref.current.focus();
+    }
+    render(){
+        return(
+            <div>
+                <input type="checkbox" id={this.props.id} value={this.state.isChecked} onChange={this.action}/>     
+                </div>
+        );
+    }
+
 }
