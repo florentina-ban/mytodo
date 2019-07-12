@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Layout from "./comp.js";
+import Layout from "./Layout.js";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
       </header>
       <div className="myCss">
-      <Layout />
+      <Layout /> 
       </div>
     </div>
   );

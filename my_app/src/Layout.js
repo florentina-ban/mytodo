@@ -1,8 +1,8 @@
-import React from 'react';
-import Item from './item.js';
-import './item.css'
+import React, {Component} from 'react';
+import Item from './Item.js';
+import Checkbox from'./Checkbox.js'
 
-export default class Layout extends React.Component{
+export default class Layout extends Component{
     render(){
         var idVar,textVar,statusVar;
         var list=[];
@@ -15,7 +15,8 @@ export default class Layout extends React.Component{
                 statusVar='todo';
                 else
                 statusVar='in progres';
-            it1= <Item id={idVar} text={textVar} status={statusVar} />;
+            var ceck=<Checkbox id={idVar+'c'}/>
+            it1= <Item id={idVar} text={textVar} status={statusVar} ck={ceck}/>;
             list.push(it1);
             }
         return(
@@ -24,11 +25,8 @@ export default class Layout extends React.Component{
                 <ul className="lista">
                     <h4 className="titlu">tiltlul listei</h4>
                     <br></br>
-
-                    <li class="item">{list[0]}</li>
-                    <li class="item">{list[1]}</li>
-                    <li class="item">{list[2]}</li>
-                    <li class="item">{list[3]}</li>
+                    jdchbschbasn gsg
+                    {list}
                 </ul>
                     
             </div>
