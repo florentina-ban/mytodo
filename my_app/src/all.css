@@ -21,13 +21,6 @@
     margin: auto;
     text-align: center;
 }
-.lista li:nth-child(even){
-    background: gray;
-
-}
-.lista li:nth-child(odd){
-    background-color: aquamarine;
-}
 .titlu{
     background-color: rgb(23, 219, 154);
     width: 40%;
@@ -35,9 +28,10 @@
     padding: 10px;
 }
 .nck{
-    display: inline;
+    display: flex;
     background-color: coral;
 }
-.nck{
+.ck{
+    display:flex;
     background-color: gray;
 }
