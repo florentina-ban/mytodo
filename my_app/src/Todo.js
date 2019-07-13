@@ -33,11 +33,10 @@ export class Checkbox extends React.Component{
     constructor(props){
         super(props);
         this.state={isChecked:false}
-        this.action=this.action.bind(this);
     }
 
-    action () {
-       this.setState({isChecked: !this.state.isChecked},  () => {});
+    action = () =>{
+       this.setState({isChecked: !this.state.isChecked},()=>{});
         //const a =document.getElementById(this.props.id);
       
     }
