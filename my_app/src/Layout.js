@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Todo from './Todo.js';
 import lista from './constants.js';
-import Checkbox from './Item.js'
 
 export default class Layout extends Component{
     render(){
