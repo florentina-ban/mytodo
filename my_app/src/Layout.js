@@ -5,7 +5,8 @@ import Checkbox from './Item.js'
 
 export default class Layout extends Component{
     render(){
-        const todos=lista.map((todo) => { return <Todo id={todo.id} text={todo.text} done={todo.done} />});
+        var r=React.createRef();
+        const todos=lista.map((todo) => { return <Todo id={todo.id} text={todo.text} done={todo.done} ref={todo.id}/>});
         return(
             <div className="myCss">
                 <h4 className="titlu">tiltlul listei</h4>
