@@ -1,6 +1,6 @@
 import React from "react";
 import "./all.css"
-import { throwStatement, thisExpression } from "@babel/types";
+//import { throwStatement, thisExpression } from "@babel/types";
 
 
 export default class Todo extends React.Component{
