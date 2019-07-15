@@ -30,8 +30,17 @@
 .nck{
     display: flex;
     background-color: coral;
+    
 }
 .ck{
     display:flex;
     background-color: gray;
+    text-decoration: line-through;
+}
+.spanclass{
+    background: red;
+    color: white;
+    font-weight: 800;
+    padding: 3px;
+    border-radius: 50%;
 }
