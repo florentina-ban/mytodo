@@ -1,5 +1,6 @@
 import React from "react";
 import "./all.css";
+import Delete from "./Delete";
 
 export default class Todo extends React.Component{
     constructor(props){
@@ -23,6 +24,8 @@ export default class Todo extends React.Component{
             <li className={this.state.className}> 
                 <input type='checkbox' id={this.props.id} onChange={this.change_className.bind(this)} /> 
                 <strong>{this.props.id}  &nbsp; &nbsp;</strong> {this.props.text} &nbsp; &nbsp;{this.props.done.toString()} 
+                &nbsp; &nbsp;
+                <Delete />
             </li>
             </div>
             );
