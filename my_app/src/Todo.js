@@ -1,51 +1,57 @@
 import React from "react";
-import "./all.css"
-import { throwStatement, thisExpression } from "@babel/types";
-
+import "./all.css";
 
 export default class Todo extends React.Component{
     constructor(props){
         super(props);
-        this.li_ref=null;
-        this.ck_ref=null;
         this.auto_ref=React.createRef();
-        this.state={className:"nck" };
-     };
-     action = () => {
-            if (this.ck_ref.current.props.isChecked===true)
-                this.setState({className:"ck"},()=>{});
-            else
-                this.setState({className:"nck"},()=>{});
-     };
+        this.ck_ref=React.createRef();
+        this.state={className:"nck" , isChecked:false};
+         };
+    change_className = () => {
+        var isc=false;
+        var cl='nck';
+         if (this.state.isChecked===false){
+            isc=true;
+            cl='ck';
+           }
+        this.setState({className:cl,isChecked:isc},()=>{});
+    };
     render(){
         return(
-            <li className={this.state.className} ref={(li)=>{this.li_ref=li}}> 
-                <Checkbox id={this.props.id+'c'} ref_la_item={this.auto_ref} ref={(Checkbox)=>{this.ck_ref=Checkbox}} />                   
-                <strong>{this.props.id}  &nbsp; </strong> {this.props.text} {this.props.done.toString()} 
-              </li>
+            <div>
+            <li className={this.state.className}> 
+                <input type='checkbox' id={this.props.id} onChange={this.change_className.bind(this)} /> 
+                <strong>{this.props.id}  &nbsp; &nbsp;</strong> {this.props.text} &nbsp; &nbsp;{this.props.done.toString()} 
+            </li>
+            </div>
             );
     };
 }
+/*
+
 export class Checkbox extends React.Component{
     constructor(props){
         super(props);
-        const a=this.props.ref_la_item.current;
-        this.ref_la_item_c=a;
         this.state={isChecked:false}
         this.action=this.action.bind(this);
     }
 
-    action () {
-        this.setState({isChecked: !this.state.isChecked},  () => {});
-        this.ref_la_item_c.action();
+    action(){
         
+        this.setState((state,props) => { return {isChecked: !state.isChecked}; });
+        //const a =document.getElementById(this.props.id);
+      
+    }
+    componentDidUpdate(){
+
     }
     render(){
         return(
             <div>
-                <input type="checkbox" id={this.props.id} value={this.state.isChecked} onChange={this.action}/>     
-                </div>
+                <input type="checkbox" id={this.props.id} value={this.isChecked} onChange={this.action()}/>     
+            </div>
         );
     }
-
 }
+*/
