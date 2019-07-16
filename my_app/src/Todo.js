@@ -17,7 +17,11 @@ export default class Todo extends React.Component{
             cl='ck';
            }
         this.setState({className:cl,isChecked:isc},()=>{});
+
     };
+    deletetodo=()=>{
+        this.props.remove_f(this.props.id);
+   }
     render(){
         return(
             <div>
@@ -25,7 +29,7 @@ export default class Todo extends React.Component{
                 <input type='checkbox' id={this.props.id} onChange={this.change_className.bind(this)} /> 
                 <strong>{this.props.id}  &nbsp; &nbsp;</strong> {this.props.text} &nbsp; &nbsp;{this.props.done.toString()} 
                 &nbsp; &nbsp;
-                <Delete />
+                <Delete id={this.props.id} remove_f={this.deletetodo.bind(this)}/>
             </li>
             </div>
             );
