@@ -45,3 +45,11 @@
     padding: 3px;
     border-radius: 50%;
 }
+.add_comp{
+    width: 38%;
+    text-align: left;
+    border: 2px rebeccapurple solid;
+    margin-top: 30px;
+    margin-left: 5px;
+    padding: 10px;
+}
