@@ -23,16 +23,17 @@
 }
 .titlu{
     background-color: rgb(23, 219, 154);
-    width: 40%;
-    margin: auto;
+    width: 37.5%;
     padding: 10px;
 }
 .nck{
+    width: 40%;
     display: flex;
     background-color: coral;
     
 }
 .ck{
+    width: 40%;
     display:flex;
     background-color: gray;
     text-decoration: line-through;

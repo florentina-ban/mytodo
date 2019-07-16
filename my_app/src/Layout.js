@@ -13,7 +13,7 @@ export default class Layout extends Component{
             if (this.state.todos[i].id !== id)
                 new_list.push(this.state.todos[i]);
         }
-        this.setState({todos:new_list});
+        this.setState({todos:new_list},()=>{});
     }
     render(){
         const list=this.state.todos;
@@ -24,6 +24,7 @@ export default class Layout extends Component{
                 <br></br>
                 {todos}    
             </div>
+            
         );
     }
 

@@ -16,6 +16,10 @@ var lista=[
     id: 'todo4',
     text: 'water plants',
     done: true
+},{
+    id: 'todo5',
+    text: 'stay focus',
+    done: false
 }];
 
 export default lista;
