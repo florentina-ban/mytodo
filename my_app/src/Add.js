@@ -5,7 +5,7 @@ import generateId from "./utils";
 export default class AddComponent extends React.Component{
     constructor(props){
         super(props);
-        this.state={text:"", done:false, id:""};
+        this.state={text:""};
     }
     hodValue = () => {
         this.setState({text:document.getElementById("todo_id").value},()=>{})
