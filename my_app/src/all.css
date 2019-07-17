@@ -3,9 +3,12 @@
     margin: auto;
     border-top: 4px red solid;   
     display: flex;
-    width: 80%;
+    width: 40%;
     justify-content: center;
-    align-items: center;
+    align-items:flex-start;
+}
+.lista{
+    width: 80%;
 }
 .titlu{
     background-color: rgb(23, 219, 154);
@@ -16,6 +19,9 @@
     text-align: center;
     display: block;
     margin-bottom: 20px;
+}
+.checkBox{
+    cursor: copy;
 }
 .nck{
     padding: 3px;
@@ -36,24 +42,22 @@
     font-weight: 800;
     padding: 3px;
     border-radius: 50%;
+    cursor: pointer;
 }
 .add_flex{
-  
     border: 2px rebeccapurple solid;
     text-align: left;
     margin: 4px;
-    height: 150px;
-
+    height: 60px;
     width: 100%;
     display: flex;
-    justify-content:center;
     align-items: center;
-
-    }
+}
 .child{
     display:block;
-    width: 100%;
-    align-self: flex-start;
+    width: 90%;
+    margin: 3px;
+    display: block;
     }
 .child_l{
     background-color: tan;
@@ -64,5 +68,8 @@
     background-color: rgb(188, 231, 87);
     text-align: left;
     align-self: flex-end;
-
+    width: 150px;
+}
+#add_button_id{
+    cursor: pointer;
 }

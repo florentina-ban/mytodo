@@ -19,7 +19,7 @@ export default class Todo extends React.Component{
         return(
             <div>
             <li className={this.state.className}> 
-                <input type='checkbox' id={this.props.id} onChange={this.changeClassName.bind(this)} /> 
+                <input type='checkbox' className="checkBox" id={this.props.id} onChange={this.changeClassName.bind(this)} /> 
                 <strong>{this.props.id}  &nbsp; &nbsp;</strong> {this.props.text} &nbsp; &nbsp;{this.props.done.toString()} 
                 &nbsp; &nbsp;
                 <Delete id={this.props.id} removeToDo={this.deleteToDo.bind(this)}/>
