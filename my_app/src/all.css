@@ -1,40 +1,32 @@
-
-.item{
-  background-color: chartreuse;  
-  color: darkgreen;
-  
-  width: 40%;
-  margin: auto;
-  padding: 10px;
-  
-}
 .myCss{
-  
-    text-align: center;
     font: normal 12px sans-serif;
-    border-top: 4px red solid;   
-}
-
-.lista{
-    list-style-type: none;
-    width: 40%;
     margin: auto;
-    text-align: center;
+    border-top: 4px red solid;   
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
 }
 .titlu{
     background-color: rgb(23, 219, 154);
-    width: 37.5%;
+    width: 40%;
+    margin: auto;
+    margin-top: 20px;
     padding: 10px;
+    text-align: center;
+    display: block;
+    margin-bottom: 20px;
 }
 .nck{
-    width: 40%;
-    display: flex;
+    padding: 3px;
     background-color: coral;
-    
+    text-align: left;
+    margin: 4px;
 }
 .ck{
-    width: 40%;
-    display:flex;
+    padding: 3px;
+    margin: 4px;
+    text-align: left;
     background-color: gray;
     text-decoration: line-through;
 }
@@ -45,11 +37,32 @@
     padding: 3px;
     border-radius: 50%;
 }
-.add_comp{
-    width: 38%;
-    text-align: left;
+.add_flex{
+  
     border: 2px rebeccapurple solid;
-    margin-top: 30px;
-    margin-left: 5px;
-    padding: 10px;
+    text-align: left;
+    margin: 4px;
+    height: 150px;
+
+    width: 100%;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+
+    }
+.child{
+    display:block;
+    width: 100%;
+    align-self: flex-start;
+    }
+.child_l{
+    background-color: tan;
+    text-align: left;
+    
+}
+.child_i{
+    background-color: rgb(188, 231, 87);
+    text-align: left;
+    align-self: flex-end;
+
 }
