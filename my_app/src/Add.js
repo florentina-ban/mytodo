@@ -14,7 +14,8 @@ export default class AddComponent extends React.Component{
             this.setState({emptyErr:""},()=>{console.log(this.state.emptyErr)});
     }       
     addToDoCb = () =>{
-        if (this.state.text.length===0){
+        var a=this.state.text.trim();
+        if (this.state.text.length===0 || a.length===0){
             this.setState({emptyErr:"fill the gap and then press +"},()=>{console.log(this.state.emptyErr)});
         }
         else{

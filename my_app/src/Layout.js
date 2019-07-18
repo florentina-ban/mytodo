@@ -17,14 +17,8 @@ export default class Layout extends Component{
         this.setState({todos:new_list});
     }
     addToDo = (stuffToDo) =>{
-        if (stuffToDo.text.length===0){
-            //alert("please fill all the gaps");
-        }
-        else{
-            let new_list=this.state.todos;
-            new_list.push(stuffToDo);
-            this.setState({todos:new_list});
-        }
+        this.state.todos.push(stuffToDo);
+        this.setState({todos:this.state.todos});
     }
     render(){
         const list=this.state.todos;
