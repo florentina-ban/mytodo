@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Todo from './Todo.js';
 import lista from './constants.js';
 import AddComponent from "./Add";
-import generateId from './utils';
 
 export default class Layout extends Component{
     constructor(){
@@ -19,7 +18,7 @@ export default class Layout extends Component{
     }
     addToDo = (stuffToDo) =>{
         if (stuffToDo.text.length===0){
-            alert("please fill all the gaps");
+            //alert("please fill all the gaps");
         }
         else{
             let new_list=this.state.todos;

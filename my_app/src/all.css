@@ -37,21 +37,21 @@
     text-decoration: line-through;
 }
 .spanclass{
-    background: red;
+    background-color: red;
     color: white;
     font-weight: 800;
     padding: 3px;
     border-radius: 50%;
     cursor: pointer;
+    text-decoration: none;
 }
 .add_flex{
     border: 2px rebeccapurple solid;
     text-align: left;
     margin: 4px;
-    height: 60px;
+    height: 80px;
     width: 100%;
-    display: flex;
-    align-items: center;
+    padding-top: 10px; 
 }
 .child{
     display:block;
@@ -72,4 +72,19 @@
 }
 #add_button_id{
     cursor: pointer;
+}
+.errorClass{
+    background:tan;
+    color:black;
+    text-align: center;
+}
+.noErrorClass{
+    background: white;
+    color: white;
+}
+.errorClassComp{
+    color:black;
+    background-color:rgb(255, 90, 0);
+    
+
 }
