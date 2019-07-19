@@ -7,23 +7,24 @@ export default class AddComponent extends React.Component{
     constructor(props){
         super(props);
         this.state={text:"",labelErrClass:"errorClass",empyErr:""};
+        this.myRef=React.createRef();
     }
     hodValue = () => {
-        this.setState({text:document.getElementById("todo_id").value, labelErrClass: document.getElementById("todo_id").value.length===0 ? "errorClass" : "noErrorClass" },()=>{console.log(this.state.labelErrClass)});      
-        if (document.getElementById("todo_id").value.length>0)
-            this.setState({emptyErr:""},()=>{console.log(this.state.emptyErr)});
+        this.setState({text:this.myRef.current.value, labelErrClass: this.myRef.current.value.length===0 ? "errorClass" : "noErrorClass" });      
+        if (this.myRef.current.value.length>0)
+            this.setState({emptyErr:""});
     }       
     addToDoCb = () =>{
-        var a=this.state.text.trim();
-        if (this.state.text.length===0 || a.length===0){
-            this.setState({emptyErr:"fill the gap and then press +"},()=>{console.log(this.state.emptyErr)});
+        const todoText=this.myRef.current.value.trim();
+
+        if (todoText.length===0){
+            this.setState({emptyErr:"fill the gap and then press +"});
         }
         else{
-
             let idG=generateId(this.props.allToDos);
             document.getElementById("todo_id").value="";
             let stuff={
-                text:this.state.text,
+                text:todoText,
                 id:idG,
                 done:false
             }
@@ -35,7 +36,7 @@ export default class AddComponent extends React.Component{
             <div className="add_flex">
                 <div className="child">
                     <label className="child_l">to do: </label>
-                    <input  className="child_i" type='text' value={this.state.text} id="todo_id" onChange={this.hodValue}></input>
+                    <input  className="child_i" type='text' value={this.state.text} id="todo_id" ref={this.myRef} onChange={this.hodValue}></input>
                     <input type="button" id="add_button_id" value="+" onClick={this.addToDoCb}></input>                    
                     <div>
                         <span className={this.state.labelErrClass}> not ready yet!</span>

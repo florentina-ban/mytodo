@@ -1,5 +1,5 @@
 
-var lista=[
+const lista=[
 {
     id: 'todo1',
     text: 'do homework',

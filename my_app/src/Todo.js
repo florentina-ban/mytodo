@@ -18,12 +18,15 @@ export default class Todo extends React.Component{
     render(){
         return(
             <div>
-            <li className={this.state.className}> 
-                <input type='checkbox' className="checkBox" id={this.props.id} onChange={this.changeClassName.bind(this)} /> 
-                <strong>{this.props.id}  &nbsp; &nbsp;</strong> {this.props.text} &nbsp; &nbsp;{this.props.done.toString()} 
-                &nbsp; &nbsp;
-                <Delete id={this.props.id} removeToDo={this.deleteToDo.bind(this)}/>
-            </li>
+                <div className="allLine">
+                    <li> 
+                        <input type='checkbox' className={this.state.className} id={this.props.id} onChange={this.changeClassName.bind(this)} /> 
+                        <span className={this.state.className} ><strong> {this.props.id}  </strong>&nbsp; &nbsp; {this.props.text} &nbsp; &nbsp;{this.props.done.toString()} 
+                        &nbsp; &nbsp; </span>
+                        
+                        <Delete id={this.props.id} removeToDo={this.deleteToDo.bind(this)}/>
+                    </li>
+                </div>
             </div>
             );
     };

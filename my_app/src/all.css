@@ -25,16 +25,23 @@
 }
 .nck{
     padding: 3px;
+    margin: 5px;
     background-color: coral;
     text-align: left;
-    margin: 4px;
-}
+}   
 .ck{
     padding: 3px;
-    margin: 4px;
+    margin: 5px;
     text-align: left;
     background-color: gray;
     text-decoration: line-through;
+}
+.allLine li{
+    display: inline;
+    list-style: none;
+}
+.allLine input{
+    cursor: pointer;
 }
 .spanclass{
     background-color: red;

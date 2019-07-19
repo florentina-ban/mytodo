@@ -10,10 +10,7 @@ export default class Layout extends Component{
     }
     removeToDo = (id) => {
         let new_list=[];
-        for (var i =0; i<this.state.todos.length; i++){
-            if (this.state.todos[i].id !== id)
-                new_list.push(this.state.todos[i]);
-        }
+        new_list=this.state.todos.filter(todo=>todo.id!==id);
         this.setState({todos:new_list});
     }
     addToDo = (stuffToDo) =>{
