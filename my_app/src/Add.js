@@ -2,6 +2,31 @@ import React from 'react';
 import "./all.css";
 import generateId from "./utils";
 import EmptyError from "./EmptyError";
+import styled from "styled-components";
+
+const AddComp=styled.h3`
+    border: 2px rgb(17, 105, 5) solid; 
+    text-align: left;
+    margin: 0;
+    height: 80px;
+    padding-top: 10px; 
+`
+export const MyLable=styled.span`
+    background-color: rgb(17, 105, 5);
+    color:rgb(161, 245, 51);
+    padding: 4px;
+    text-align: left;
+    margin:2px;
+`
+const MyLable2=styled(MyLable)`
+    background-color: ${props => props.error==="errorClass"? "rgb(17, 105, 5)" : "rgb(161, 245, 51)"};
+    color:${props => props.error==="errorClass"? "rgb(161, 245, 51)" : "rgb(161, 245, 51)"};
+    margin: 2px;
+`
+const BtnAdd=styled.input`
+    background-color: rgb(11, 224, 107);
+    margin:2px;
+`
 
 export default class AddComponent extends React.Component{
     constructor(props){
@@ -33,20 +58,13 @@ export default class AddComponent extends React.Component{
     }
     render(){
         return(
-            <div className="add_flex">
-                <div className="child">
-                    <label className="child_l">to do: </label>
-                    <input  className="child_i" type='text' value={this.state.text} id="todo_id" ref={this.myRef} onChange={this.hodValue}></input>
-                    <input type="button" id="add_button_id" value="+" onClick={this.addToDoCb}></input>                    
-                    <div>
-                        <span className={this.state.labelErrClass}> not ready yet!</span>
-                    </div>
-                    <div>
-                        <EmptyError errMessage={this.state.emptyErr} />
-                    </div>
-                </div>
-
-            </div>
+            <AddComp>
+                    <MyLable> What do you have to do? </MyLable>
+                    <input  className="child_i" type='text' id="todo_id" ref={this.myRef} onChange={this.hodValue}></input>
+                    <BtnAdd type="button" id="add_button_id" value="+" onClick={this.addToDoCb} ></BtnAdd>
+                    <MyLable2 error={this.state.labelErrClass}> not ready yet! </MyLable2>
+                    <EmptyError errMessage={this.state.emptyErr} />
+            </AddComp>
         );
     }
 }
