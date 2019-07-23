@@ -54,13 +54,14 @@ export default class AddComponent extends React.Component{
                 done:false
             }
             this.props.addToDo(stuff);
+            this.setState({labelErrClass:"errorClass"},()=>{});
         }
     }
     render(){
         return(
             <AddComp>
                     <MyLable> What do you have to do? </MyLable>
-                    <input  className="child_i" type='text' id="todo_id" ref={this.myRef} onChange={this.hodValue}></input>
+                    <BtnAdd type='text' id="todo_id" ref={this.myRef} onChange={this.hodValue}></BtnAdd>
                     <BtnAdd type="button" id="add_button_id" value="+" onClick={this.addToDoCb} ></BtnAdd>
                     <MyLable2 error={this.state.labelErrClass}> not ready yet! </MyLable2>
                     <EmptyError errMessage={this.state.emptyErr} />

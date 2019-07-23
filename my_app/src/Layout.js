@@ -47,10 +47,8 @@ export default class Layout extends Component{
                     My ToDO List
                 </ListTitle>
                 <ListComp>
-                    <div className="lista">
-                        <AddComponent addToDo={this.addToDo} id="add_id" allToDos={this.state.todos}/> 
-                        {todos}     
-                    </div>
+                    <AddComponent addToDo={this.addToDo} id="add_id" allToDos={this.state.todos}/> 
+                    {todos}     
                 </ListComp>
             </div>
             

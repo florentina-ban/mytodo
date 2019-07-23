@@ -1,3 +1,8 @@
+import React from "react"
+import styled from "styled-components"
+const CheckStyle=styled.input`
+    cursor:pointer;
+`
 
 export default class Checkbox extends React.Component{
     constructor(props){
@@ -15,9 +20,7 @@ export default class Checkbox extends React.Component{
     }
     render(){
         return(
-            <div>
-                <input type="checkbox" id={this.props.id} value={this.state.isChecked} onChange={this.action}/>     
-                </div>
+            <CheckStyle> type="checkbox" id={this.props.id} value={this.state.isChecked} onChange={this.action}</CheckStyle>
         );
     }
 

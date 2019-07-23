@@ -11,7 +11,7 @@ const MyLable3=styled.p`
 
 function EmptyErr (props){
    return(
-       <MyLable3> {props.errMessage}</MyLable3>
+       <MyLable3> {props.errMessage} </MyLable3>
        );
 }
 export default EmptyErr;
