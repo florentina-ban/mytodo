@@ -1,5 +1,4 @@
 import React from 'react';
-import "./all.css";
 import generateId from "./utils";
 import EmptyError from "./EmptyError";
 import styled from "styled-components";
@@ -26,6 +25,7 @@ const MyLable2=styled(MyLable)`
 const BtnAdd=styled.input`
     background-color: rgb(11, 224, 107);
     margin:2px;
+    cursor: pointer;
 `
 
 export default class AddComponent extends React.Component{

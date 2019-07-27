@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
 
-const BtnText = styled.text`
+const BtnText = styled.span`
     color: black;
     font-weight: 800;
     padding: 3px;
@@ -14,20 +14,28 @@ const BtnText = styled.text`
     background-color: rgb(132, 168, 2);
     border-radius: 40%;
     cursor: pointer;
-`;
+`,
 
-function Delete (props) {
+    DeleteTodo = function DeleteTodo ({id, removeToDo}) {
 
-    return (
-        <DeleteBtn onClick={props.removeToDo.bind(this, props.id)}>
-            <BtnText> Delete ? </BtnText>
-        </DeleteBtn>
-    );
+        return (
+            <DeleteBtn onClick={removeToDo.bind(id)}>
+                <BtnText>
+                    {"Delete ?"}
+                </BtnText>
+            </DeleteBtn>
+        );
 
-}
+    };
 
-Delete.propTypes = {
-    "id": PropTypes.string
+export default DeleteTodo;
+
+DeleteTodo.defaultProps = {
+    "id": "",
+    "removeToDo": ""
 };
 
-export default Delete;
+DeleteTodo.propTypes = {
+    "id": PropTypes.string,
+    "removeToDo": PropTypes.func
+};

@@ -1,11 +1,12 @@
-import React from 'react';
-import './App.css';
 import Layout from "./Layout.js";
+import React from "react";
 
-function App() {
+const App = function App () {
+
     return (
-        <Layout/> 
-      );
-    }
+        <Layout />
+    );
+
+};
 
 export default App;

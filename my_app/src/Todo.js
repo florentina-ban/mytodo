@@ -1,4 +1,4 @@
-import Delete from "./Delete";
+import DeleteTodo from "./Delete";
 import React from "react";
 import styled from "styled-components";
 import PropTypes from 'prop-types';
@@ -70,7 +70,7 @@ export default class Todo extends React.Component {
 
                     {" "}
                 </MyTodoItem>
-                <Delete
+                <DeleteTodo
                     id={this.props.id}
                     removeToDo={this.deleteToDo.bind(this)}
                 />
