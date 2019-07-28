@@ -3,12 +3,11 @@ import generateId from "./utils";
 import EmptyError from "./EmptyError";
 import styled from "styled-components";
 
-const AddComp=styled.h3`
-    border: 2px rgb(17, 105, 5) solid; 
+const AddComp=styled.span`
+    padding: 3px;
+    margin: 3px;
     text-align: left;
-    margin: 0;
-    height: 80px;
-    padding-top: 10px; 
+    background-color: "rgb(118, 230, 44)";
 `
 export const MyLable=styled.span`
     background-color: rgb(17, 105, 5);
@@ -33,6 +32,10 @@ export default class AddComponent extends React.Component{
         super(props);
         this.state={text:"",labelErrClass:"errorClass",empyErr:""};
         this.myRef=React.createRef();
+    }
+    keyHandler = (event) => {
+        if (event.key==="Enter")
+            this.addToDoCb();
     }
     hodValue = () => {
         this.setState({text:this.myRef.current.value, labelErrClass: this.myRef.current.value.length===0 ? "errorClass" : "noErrorClass" });      
@@ -59,8 +62,8 @@ export default class AddComponent extends React.Component{
     }
     render(){
         return(
-            <AddComp>
-                    <MyLable> What do you have to do? </MyLable>
+            <AddComp onKeyPress={this.keyHandler}>
+                    <input type="Checkbox" ></input>
                     <BtnAdd type='text' id="todo_id" ref={this.myRef} onChange={this.hodValue}></BtnAdd>
                     <BtnAdd type="button" id="add_button_id" value="+" onClick={this.addToDoCb} ></BtnAdd>
                     <MyLable2 error={this.state.labelErrClass}> not ready yet! </MyLable2>

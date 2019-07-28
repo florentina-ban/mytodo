@@ -3,6 +3,7 @@ import Todo from './Todo.js';
 import lista from './constants.js';
 import AddComponent from "./Add";
 import styled from "styled-components";
+
 const ListTitle=styled.h1`
     background-color: rgb(17, 105, 5);
     width: 60%;
@@ -27,28 +28,50 @@ const ListComp=styled.p`
 export default class Layout extends Component{
     constructor(){
         super();
-        this.state={todos:lista};
+        this.state={todos:lista, checkedTodos:[]};
     }
     removeToDo = (id) => {
         let new_list=[];
         new_list=this.state.todos.filter(todo=>todo.id!==id);
-        this.setState({todos:new_list});
+        if (new_list.length<this.state.todos.length)
+            this.setState({todos:new_list});
+        else{
+            new_list=this.state.checkedTodos.filter(todo=>todo.id!==id);
+            this.setState({checkedTodos:new_list});
+        }
     }
-    addToDo = (stuffToDo) =>{
+    setChecked = (id) => {
+        let new_todo = this.state.todos.filter(todo => todo.id===id)[0];
+        const cList=Array.from(this.state.checkedTodos);
+        cList.push(new_todo);
+        this.setState({checkedTodos:cList},this.removeToDo(id));
+    }
+    setUnChecked = (id) => {
+        let new_todo = this.state.checkedTodos.filter(todo => todo.id===id)[0];
+        const cList=Array.from(this.state.checkedTodos);
+        const newcList=cList.filter(todo => todo.id!==id);
+        let newTodos=this.state.todos;
+        newTodos.push(new_todo);
+        this.setState({checkedTodos:newcList,todos:newTodos},()=>{});
+    }
+    addToDo = (stuffToDo) => {
         this.state.todos.push(stuffToDo);
         this.setState({todos:this.state.todos});
     }
     render(){
         const list=this.state.todos;
-        const todos=list.map((todo) => { return <Todo id={todo.id} text={todo.text} done={todo.done} key={`todo_${todo.id}`} ref={todo.id} removeToDo={this.removeToDo}/>});
+        const todos=list.map((todo) => { return <Todo id={todo.id} text={todo.text} done={todo.done} key={`todo_${todo.id}`} ck={false} ref={todo.id} removeToDo={this.removeToDo} setChecked={this.setChecked}/>});
+        const cList=Array.from(this.state.checkedTodos);
+        const checked=cList.map((todo) => { return <Todo id={todo.id} text={todo.text} done={todo.done} key={`todo_${todo.id}`} ck={true} ref={todo.id} removeToDo={this.removeToDo} setChecked={this.setUnChecked}/>});
         return(
             <div>
                 <ListTitle>
                     My ToDO List
                 </ListTitle>
                 <ListComp>
+                    {todos} 
                     <AddComponent addToDo={this.addToDo} id="add_id" allToDos={this.state.todos}/> 
-                    {todos}     
+                    {checked}
                 </ListComp>
             </div>
             

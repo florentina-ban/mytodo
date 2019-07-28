@@ -18,13 +18,15 @@ const CheckBox = styled.input`
     text-decoration: ${(props) => (props.cheked === "nck" ? "none" : "line-through")};
 `;
 
+
 export default class Todo extends React.Component {
 
     constructor (props) {
 
         super(props);
-        this.state = {"className": "nck",
-            "isChecked": false};
+        this.state= props.ck===false ? {"className": "nck",
+        "isChecked": false} : {"className": "ck",
+        "isChecked": true}
 
     }
 
@@ -38,8 +40,14 @@ export default class Todo extends React.Component {
 
         const cl = this.state.isChecked ? "nck" : "ck";
         this.setState({"className": cl,
-            "isChecked": !this.state.isChecked});
-
+            "isChecked": !this.state.isChecked},()=>{this.goOnFunction()});
+    }
+    goOnFunction (){
+        if (this.state.isChecked & this.props.ck===false)
+            this.props.setChecked(this.props.id);
+        else
+            if (!this.state.isChecked & this.props.ck===true)
+                this.props.setChecked(this.props.id);
     }
 
     deleteToDo () {
