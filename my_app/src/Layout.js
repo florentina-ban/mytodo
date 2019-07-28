@@ -25,6 +25,16 @@ const ListComp=styled.p`
     justify-content: center;
     align-items:flex-start;
 `
+const LittleTitle=styled(ListTitle)`
+    width: 30%;
+    background-color: rgb(161, 245, 51);
+    color:  rgb(17, 105, 5);
+    margin-left: 20px;
+    font-size: 15px;
+    text-align: left;
+    border: 0px;
+    margin-bottom: 0;
+`
 export default class Layout extends Component{
     constructor(){
         super();
@@ -69,8 +79,10 @@ export default class Layout extends Component{
                     My ToDO List
                 </ListTitle>
                 <ListComp>
+                    <LittleTitle>Stuff to do: </LittleTitle>
                     {todos} 
                     <AddComponent addToDo={this.addToDo} id="add_id" allToDos={this.state.todos}/> 
+                    <LittleTitle>Stuff already done:</LittleTitle>
                     {checked}
                 </ListComp>
             </div>

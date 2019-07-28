@@ -11,11 +11,12 @@ const EmptyErr = function EmptyErr ({errMessage}) {
         );
 
     },
-    MyLable3 = styled.p`
+    MyLable3 = styled.span`
         background-color: rgb(161, 245, 51);
         color:rgb(217, 9, 9);
         margin-left:2px;
         margin-top:15px;
+        font-weight: bold;
 `;
 
 EmptyErr.propTypes = {

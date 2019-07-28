@@ -46,7 +46,7 @@ export default class AddComponent extends React.Component{
         const todoText=this.myRef.current.value.trim();
 
         if (todoText.length===0){
-            this.setState({emptyErr:"fill the gap and then press +"});
+            this.setState({emptyErr:"fill the gap and then press Enter"});
         }
         else{
             let idG=generateId(this.props.allToDos);
