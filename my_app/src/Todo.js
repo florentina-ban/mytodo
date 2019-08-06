@@ -1,7 +1,7 @@
 import DeleteTodo from "./Delete";
+import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
-import PropTypes from 'prop-types';
 
 const CheckBox = styled.input`
     cursor:pointer;
@@ -14,73 +14,115 @@ const CheckBox = styled.input`
     padding: 3px;
     margin: 3px;
     text-align: left;
-    background-color: ${(props) => (props.cheked === "nck" ? "rgb(118, 230, 44)" : "rgb(242, 203, 48)")};
-    text-decoration: ${(props) => (props.cheked === "nck" ? "none" : "line-through")};
+    background-color: ${(props) => {
+        if (props.cheked === "nck") {
+            return "rgb(118, 230, 44)";
+        }
+        return "rgb(242, 203, 48)";
+    }
+};
+    text-decoration: ${(props) => {
+        if (props.cheked === "nck") {
+            return "none";
+        }
+        return "line-through";
+    }
+};
 `;
 
-
 export default class Todo extends React.Component {
+
+    static propTypes = {
+        "ck": PropTypes.bool,
+        "done": PropTypes.bool,
+        "id": PropTypes.string,
+        "removeToDo": PropTypes.func,
+        "setChecked": PropTypes.func,
+        "text": PropTypes.string
+    }
+
+    static defaultProps = {
+        "ck": true,
+        "done": true,
+        "id": "",
+        "removeToDo": () => null,
+        "setChecked": () => null,
+        "text": ""
+    }
 
     constructor (props) {
 
         super(props);
-        this.state= props.ck===false ? {"className": "nck",
-        "isChecked": false} : {"className": "ck",
-        "isChecked": true}
+        if (props.ck === false) {
+            this.state = {"className": "nck",
+                "isChecked": false};
+        } else {
+            this.state = {"className": "ck",
+                "isChecked": true};
+        }
+        this.handleChangeClassName = this.handleChangeClassName.bind(this);
+        this.deleteToDo = this.deleteToDo.bind(this);
 
     }
 
-    static propTypes = {
-        "id" : PropTypes.string,
-        "text" : PropTypes.string,
-        "done" : PropTypes.bool
-    }
-
-    changeClassName () {
-
-        const cl = this.state.isChecked ? "nck" : "ck";
+    handleChangeClassName () {
+        const {isChecked} = this.state;
+        let cl = "";
+        if (isChecked) {
+            cl = "nck";
+        } else {
+            cl = "ck";
+        }
         this.setState({"className": cl,
-            "isChecked": !this.state.isChecked},()=>{this.goOnFunction()});
+            "isChecked": !isChecked}, () => {
+            this.goOnFunction();
+        });
     }
-    goOnFunction (){
-        if (this.state.isChecked & this.props.ck===false)
-            this.props.setChecked(this.props.id);
-        else
-            if (!this.state.isChecked & this.props.ck===true)
-                this.props.setChecked(this.props.id);
+
+    goOnFunction () {
+        const {isChecked} = this.state,
+            {ck, id, setChecked} = this.props;
+        if (isChecked && ck === false) {
+            setChecked(id);
+        } else
+        if (!isChecked && ck === true) {
+            setChecked(id);
+        }
     }
 
     deleteToDo () {
-
-        this.props.removeToDo(this.props.id);
+        const {id} = this.props,
+            {removeToDo} = this.props;
+        removeToDo(id);
 
     }
 
     render () {
-
+        const {done, id, text} = this.props,
+            {className} = this.state;
         return (
             <ListStyle>
                 <CheckBox
-                    id={this.props.id}
-                    onChange={this.changeClassName.bind(this)}
+                    id={id}
+                    onChange={this.handleChangeClassName}
                     type="checkbox"
                 />
-                <MyTodoItem cheked={this.state.className}>
+                <MyTodoItem cheked={className}>
                     <strong>
                         {" "}
-                        {this.props.id}
+                        {id}
                         {" "}
                     </strong>
-                    {this.props.text}
+                    {text}
                     {" "}
-                    {this.props.done.toString()}
+                    {done.toString()}
                     {" "}
 
                     {" "}
                 </MyTodoItem>
                 <DeleteTodo
-                    id={this.props.id}
-                    removeToDo={this.deleteToDo.bind(this)}
+                    id={id}
+                    removeToDo={this.deleteToDo}
                 />
             </ListStyle>
         );

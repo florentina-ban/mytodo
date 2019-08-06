@@ -8,7 +8,7 @@ const BtnText = styled.span`
     padding: 3px;
     font-family: sans-serif
     font-style: italic;
-    font-size:12px;
+    font-size:13px;
 `,
     DeleteBtn = styled.span`
     background-color: rgb(132, 168, 2);
@@ -21,7 +21,7 @@ const BtnText = styled.span`
         return (
             <DeleteBtn onClick={removeToDo.bind(id)}>
                 <BtnText>
-                    {"Delete ?"}
+                    {"X"}
                 </BtnText>
             </DeleteBtn>
         );

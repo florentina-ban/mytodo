@@ -1,18 +1,18 @@
-function generateId(todoList){
-    let a='todo';
-    let found=false;
-    let id;
-    while (!found){
-        found=true;        
-        let b=Math.random()*100;
-        b=parseInt(b);
-        id=a+b;
-        for (let i=0; i<todoList.length; i++){
-            if (todoList[i].id===id){
-                found=false;
+const generateId = function generateId (todoList) {
+    const increm = 1,
+        someNumber = 100;
+    let found = false,
+        id = "";
+    while (!found) {
+        found = true;
+        const myNumber = parseInt(Math.random() * someNumber, 10);
+        id = `todo${myNumber}`;
+        for (let iter = 0; iter < todoList.length; iter += increm) {
+            if (todoList[iter].id === id) {
+                found = false;
             }
         }
     }
     return id;
-}
+};
 export default generateId;
