@@ -40,46 +40,51 @@ export default class Layout extends Component {
         super();
         this.state = {"checkedTodos": [],
             "todos": lista};
+        this.removeToDo = this.removeToDo.bind(this);
+        this.setChecked = this.setChecked.bind(this);
+        this.setUnChecked = this.setUnChecked.bind(this);
+        this.addToDo = this.addToDo.bind(this);
     }
 
-    removeToDo = (id) => {
-        let [...newList] = this.state.todos.filter((todo) => todo.id !== id);
-        if (newList.length < this.state.todos.length) {
+    removeToDo (id) {
+        const {checkedTodos} = this.state,
+            {todos} = this.state;
+        let [...newList] = todos.filter((todo) => todo.id !== id);
+        if (newList.length < todos.length) {
             this.setState({"todos": newList});
         } else {
-            newList = this.state.checkedTodos.filter((todo) => todo.id !== id);
+            newList = checkedTodos.filter((todo) => todo.id !== id);
             this.setState({"checkedTodos": newList});
         }
     }
 
-    setChecked = (id) => {
-        const newTodo = this.state.todos.filter((todo) => todo.id === id)[0],
-            cList = Array.from(this.state.checkedTodos);
-        cList.push(newTodo);
-        this.setState({"checkedTodos": cList}, this.removeToDo(id));
+    setChecked (id) {
+        const {checkedTodos} = this.state,
+            {todos} = this.state,
+            [newTodo] = todos.filter((todo) => todo.id === id);
+        checkedTodos.push(newTodo);
+        this.setState({checkedTodos}, this.removeToDo(id));
     }
 
-    setUnChecked = (id) => {
-        const cList = Array.from(this.state.checkedTodos),
-            newcList = cList.filter((todo) => todo.id !== id),
-            newTodo = this.state.checkedTodos.filter((todo) => todo.id === id)[0],
-            newTodos = this.state.todos;
-        newTodos.push(newTodo);
-        this.setState({"checkedTodos": newcList,
-            "todos": newTodos}, () => {});
+    setUnChecked (id) {
+        const {checkedTodos} = this.state,
+            {todos} = this.state,
+            vnewcList = checkedTodos.filter((todo) => todo.id !== id),
+            [vnewTodo] = checkedTodos.filter((todo) => todo.id === id);
+        todos.push(vnewTodo);
+        this.setState({"checkedTodos": vnewcList,
+            todos});
     }
 
-    addToDo = (stuffToDo) => {
-        const [...todos] = this.state.todos;
+    addToDo (stuffToDo) {
+        const {todos} = this.state;
         todos.push(stuffToDo);
-        this.state.todos.push(stuffToDo);
         this.setState({todos});
     }
 
     render () {
-        const [...cList] = Array.from(this.state.checkedTodos),
-            checked = cList.map((todo) => <Todo
-                ck={true}
+        const {checkedTodos} = this.state,
+            checked = checkedTodos.map((todo) => <Todo
                 done={todo.done}
                 id={todo.id}
                 key={`todo_${todo.id}`}
@@ -88,8 +93,8 @@ export default class Layout extends Component {
                 setChecked={this.setUnChecked}
                 text={todo.text}
             />),
-            [...list] = this.state.todos,
-            todos = list.map((todo) => <Todo
+            {todos} = this.state,
+            todosMod = todos.map((todo) => <Todo
                 ck={false}
                 done={todo.done}
                 id={todo.id}
@@ -112,14 +117,13 @@ export default class Layout extends Component {
                             {"Stuff to do:"}
                         </p>
                     </LittleTitle>
-                    {todos}
+                    {todosMod}
                     <AddComponent
                         addToDo={this.addToDo}
-                        allToDos={list}
+                        allToDos={checkedTodos}
                         id="add_id"
                     />
                     <LittleTitle>
-                        {" "}
                         <p>
                             {"Stuff already done:"}
                         </p>
@@ -127,8 +131,6 @@ export default class Layout extends Component {
                     {checked}
                 </ListComp>
             </div>
-
         );
     }
-
 }

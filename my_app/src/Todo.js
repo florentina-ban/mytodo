@@ -55,13 +55,16 @@ export default class Todo extends React.Component {
         super(props);
         if (props.ck === false) {
             this.state = {"className": "nck",
-                "isChecked": false};
+                "isChecked": false,
+                "htmlTag": "span"};
         } else {
             this.state = {"className": "ck",
-                "isChecked": true};
+                "isChecked": true,
+                "htmlTag": "span"};
         }
         this.handleChangeClassName = this.handleChangeClassName.bind(this);
         this.deleteToDo = this.deleteToDo.bind(this);
+        this.handleOnClick = this.handleOnClick.bind(this);
 
     }
 
@@ -97,9 +100,13 @@ export default class Todo extends React.Component {
 
     }
 
+    handleOnClick () {
+        this.setState({"htmlTag":"input"});
+    }
+
     render () {
         const {done, id, text} = this.props,
-            {className} = this.state;
+            {className, htmlTag} = this.state;
         return (
             <ListStyle>
                 <CheckBox
@@ -113,8 +120,10 @@ export default class Todo extends React.Component {
                         {id}
                         {" "}
                     </strong>
+                    
                     {text}
                     {" "}
+                    
                     {done.toString()}
                     {" "}
 
