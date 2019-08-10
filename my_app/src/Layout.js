@@ -38,11 +38,12 @@ const ListComp = styled.p`
 export default class Layout extends Component {
     constructor () {
         super();
-        let todos,checkedTodos;
-        todos = lista.filter((todo) => todo.done===false);
-        checkedTodos = lista.filter((todo) => todo.done===true);
-        this.state = {'checkedTodos': checkedTodos,
-            'todos': todos};
+        let checkedTodos = [],
+            todos = [];
+        todos = lista.filter((todo) => todo.done === false);
+        checkedTodos = lista.filter((todo) => todo.done === true);
+        this.state = {checkedTodos,
+            todos};
         this.removeToDo = this.removeToDo.bind(this);
         this.setChecked = this.setChecked.bind(this);
         this.setUnChecked = this.setUnChecked.bind(this);
@@ -66,7 +67,7 @@ export default class Layout extends Component {
         const {checkedTodos} = this.state,
             {todos} = this.state,
             [newTodo] = todos.filter((todo) => todo.id === id);
-            newTodo.done = true;
+        newTodo.done = true;
         checkedTodos.push(newTodo);
         this.setState({checkedTodos}, this.removeToDo(id));
     }
@@ -76,7 +77,7 @@ export default class Layout extends Component {
             {todos} = this.state,
             vnewcList = checkedTodos.filter((todo) => todo.id !== id),
             [vnewTodo] = checkedTodos.filter((todo) => todo.id === id);
-            vnewTodo.done = false;
+        vnewTodo.done = false;
         todos.push(vnewTodo);
         this.setState({'checkedTodos': vnewcList,
             todos});
@@ -88,25 +89,27 @@ export default class Layout extends Component {
         this.setState({todos});
     }
 
-    modifyText (id, newText){
+    modifyText (id, newText) {
         const {checkedTodos} = this.state,
-            {todos} = this.state;
-        let found = false;
-        for (let i=0; i<todos.length && !found; i++){
-            if (todos[i].id===id){
-                todos[i].text = newText;
+            {todos} = this.state,
+            rate = 1;
+        for (let counter = 0; counter < todos.length; counter += rate) {
+            if (todos[counter].id === id) {
+                todos[counter].text = newText;
+                this.setState({todos});
+                return;
             }
         }
-        if (!found){
-            for (let i=0; i<checkedTodos.length && !found; i++){
-                if (checkedTodos[i].id===id){
-                    checkedTodos[i].text = newText;
-                }
+        for (let counter = 0; counter < checkedTodos.length; counter += rate) {
+            if (checkedTodos[counter].id === id) {
+                checkedTodos[counter].text = newText;
+                this.setState({checkedTodos});
+                return;
             }
-        }   
-        this.setState({'todos': todos,'checkedTodos': checkedTodos});    
+        }
     }
-        
+
+
     render () {
         const {checkedTodos} = this.state,
             checked = checkedTodos.map((todo) => <Todo

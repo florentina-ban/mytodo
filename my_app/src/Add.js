@@ -1,8 +1,8 @@
-import EmptyError from "./EmptyError";
-import PropTypes from "prop-types";
-import React from "react";
-import generateId from "./utils";
-import styled from "styled-components";
+import EmptyError from './EmptyError';
+import PropTypes from 'prop-types';
+import React from 'react';
+import generateId from './utils';
+import styled from 'styled-components';
 
 
 const AddComp = styled.span`
@@ -32,17 +32,17 @@ const AddComp = styled.span`
 `,
     MyLable2 = styled(MyLable)`
         background-color: ${(props) => {
-        if (props.error === "errorClass") {
-            return "rgb(17, 105, 5)";
+        if (props.error === 'errorClass') {
+            return 'rgb(17, 105, 5)';
         }
-        return "rgb(161, 245, 51)";
+        return 'rgb(161, 245, 51)';
     }
 };
         color: ${(props) => {
-        if (props.error === "errorClass") {
-            return "rgb(161, 245, 51)";
+        if (props.error === 'errorClass') {
+            return 'rgb(161, 245, 51)';
         }
-        return "rgb(161, 245, 51)";
+        return 'rgb(161, 245, 51)';
     }
 };
         margin: 2px;
@@ -51,8 +51,8 @@ const AddComp = styled.span`
 export default class AddComponent extends React.Component {
 
     static propTypes = {
-        "addToDo": PropTypes.func,
-        "allToDos": PropTypes.arrayOf(PropTypes.oneOfType([
+        'addToDo': PropTypes.func,
+        'allToDos': PropTypes.arrayOf(PropTypes.oneOfType([
             PropTypes.bool,
             PropTypes.string,
             PropTypes.string
@@ -60,16 +60,16 @@ export default class AddComponent extends React.Component {
     }
 
     static defaultProps = {
-        "addToDo": () => {
+        'addToDo': () => {
             const aNumber = 0;
             return aNumber;
         },
-        "allToDos": []
+        'allToDos': []
     }
 
     constructor (props) {
         super(props);
-        this.state = {"labelErrClass": "errorClass"};
+        this.state = {'labelErrClass': 'errorClass'};
         this.myRef = React.createRef();
         this.handleKey = this.handleKey.bind(this);
         this.handleValue = this.handleValue.bind(this);
@@ -77,22 +77,22 @@ export default class AddComponent extends React.Component {
     }
 
     handleKey (event) {
-        if (event.key === "Enter") {
+        if (event.key === 'Enter') {
             this.handleAddToDoCb();
         }
     }
 
     handleValue () {
-        let errclass = "";
+        let errclass = '';
         const zero = 0;
         if (this.myRef.current.value.length === zero) {
-            errclass = "errorClass";
+            errclass = 'errorClass';
         } else {
-            errclass = "noErrorClass";
+            errclass = 'noErrorClass';
         }
-        this.setState({"labelErrClass": errclass});
+        this.setState({'labelErrClass': errclass});
         if (this.myRef.current.value.length) {
-            this.setState({"emptyErr": ""});
+            this.setState({'emptyErr': ''});
         }
     }
 
@@ -102,18 +102,18 @@ export default class AddComponent extends React.Component {
             zero = 0;
 
         if (todoText.length === zero) {
-            this.setState({"emptyErr": "fill the gap and then press Enter"});
+            this.setState({'emptyErr': 'fill the gap and then press Enter'});
         } else {
-            document.getElementById("todo_id").value = "";
+            document.getElementById('todo_id').value = '';
             const idG = generateId(allToDos),
                 stuff = {
-                    "done": false,
-                    "id": idG,
-                    "text": todoText
+                    'done': false,
+                    'id': idG,
+                    'text': todoText
 
                 };
             addToDo(stuff);
-            this.setState({"labelErrClass": "errorClass"});
+            this.setState({'labelErrClass': 'errorClass'});
         }
     }
 
@@ -134,7 +134,7 @@ export default class AddComponent extends React.Component {
                     value="+"
                 />
                 <MyLable2 error={labelErrClass}>
-                    {"not ready yet !"}
+                    {'not ready yet !'}
                 </MyLable2>
                 <EmptyError errMessage={emptyErr} />
             </AddComp>

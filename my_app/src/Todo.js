@@ -10,6 +10,11 @@ const CheckBox = styled.input`
     list-style:none;
     margin:5px;
 `,
+    MyInput = styled.input`
+    background-color: rgb(163, 255, 43);
+    border : 0;
+    width: 100px;
+`,
     MyTodoItem = styled.span`
     padding: 3px;
     margin: 3px;
@@ -28,12 +33,6 @@ const CheckBox = styled.input`
         return 'line-through';
     }
 };
-`,
-    MyInput = styled.input`
-    background-color: rgb(163, 255, 43);
-    border : 0;
-    width: 100px;
-    
 `;
 
 export default class Todo extends React.Component {
@@ -42,9 +41,9 @@ export default class Todo extends React.Component {
         'ck': PropTypes.bool,
         'done': PropTypes.bool,
         'id': PropTypes.string,
+        'modifyText': PropTypes.func,
         'removeToDo': PropTypes.func,
         'setChecked': PropTypes.func,
-        'modifyText': PropTypes.func,
         'text': PropTypes.string
     }
 
@@ -52,34 +51,32 @@ export default class Todo extends React.Component {
         'ck': true,
         'done': true,
         'id': '',
+        'modifyText': () => null,
         'removeToDo': () => null,
         'setChecked': () => null,
-        'modifyText': () => null,
         'text': ''
     }
 
     constructor (props) {
-
         super(props);
+        const {text} = this.props;
         if (props.ck === false) {
             this.state = {'className': 'nck',
                 'isChecked': false,
-                'htmlTag': 'span',
                 'isClicked': false,
-                'text': this.props.text};
+                text};
         } else {
             this.state = {'className': 'ck',
                 'isChecked': true,
-                'htmlTag': 'span',
                 'isClicked': false,
-                'text': this.props.text};
+                text};
         }
         this.handleChangeClassName = this.handleChangeClassName.bind(this);
         this.deleteToDo = this.deleteToDo.bind(this);
         this.handleOnClick = this.handleOnClick.bind(this);
-        this.getHtmlTag = this.getHtmlTag.bind(this);   
-        this.saveModifiedTodo = this.saveModifiedTodo.bind(this);
-        
+        this.getHtmlTag = this.getHtmlTag.bind(this);
+        this.handleSaveModifiedTodo = this.handleSaveModifiedTodo.bind(this);
+
         this.inputRef = React.createRef();
     }
 
@@ -115,34 +112,45 @@ export default class Todo extends React.Component {
 
     }
 
-    handleOnClick (id) {
+    handleOnClick () {
         const {isClicked} = this.state;
-        this.setState({'isClicked':!isClicked});
+        this.setState({'isClicked': !isClicked});
     }
+
     getHtmlTag (text) {
-        const {isClicked} = this.state;
-        if (isClicked)
+        const {id} = this.props,
+            {isClicked} = this.state;
+        if (isClicked) {
             return (
-                <MyInput type='text' id={this.props.id} placeholder={text} onKeyPress={this.saveModifiedTodo} ref={this.inputRef}>
-                </MyInput>
+                <MyInput
+                    id={id}
+                    onKeyPress={this.handleSaveModifiedTodo}
+                    placeholder={text}
+                    ref={this.inputRef}
+                    type="text"
+                />
             );
+        }
         return (
-            <span onClick={this.handleOnClick}>{text}</span>
+            <span onClick={this.handleOnClick}>
+                {text}
+            </span>
         );
     }
 
-    saveModifiedTodo (event) {
-        if (event.key === "Enter") {
-                let newText = this.inputRef.current.value.trim();
-                if (newText.length>0)
-                this.setState({'text':newText},()=>{
-                    this.handleOnClick(this.props.id); 
-                    this.props.modifyText(this.props.id, newText);
+    handleSaveModifiedTodo (event) {
+        const {id, modifyText} = this.props;
+        if (event.key === 'Enter') {
+            const newText = this.inputRef.current.value.trim();
+            if (newText.length) {
+                this.setState({'text': newText}, () => {
+                    this.handleOnClick(id);
+                    modifyText(id, newText);
                 });
-                else{
-                    this.handleOnClick(this.props.id);
-                }
+            } else {
+                this.handleOnClick(id);
             }
+        }
     }
 
     render () {
@@ -156,7 +164,7 @@ export default class Todo extends React.Component {
                     type="checkbox"
                 />
                 <MyTodoItem cheked={className}>
-                    {this.getHtmlTag(text)};
+                    {this.getHtmlTag(text)}
                     {' '}
                 </MyTodoItem>
                 <DeleteTodo
