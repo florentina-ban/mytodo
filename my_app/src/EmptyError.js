@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import React from "react";
-import styled from "styled-components";
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
 
 const EmptyErr = function EmptyErr ({errMessage}) {
 
@@ -20,10 +20,10 @@ const EmptyErr = function EmptyErr ({errMessage}) {
 `;
 
 EmptyErr.propTypes = {
-    "errMessage": PropTypes.string
+    'errMessage': PropTypes.string
 };
 EmptyErr.defaultProps = {
-    "errMessage": ""
+    'errMessage': ''
 };
 
 export default EmptyErr;

@@ -1,8 +1,8 @@
-import React, {Component} from "react";
-import AddComponent from "./Add";
-import Todo from "./Todo.js";
-import lista from "./constants.js";
-import styled from "styled-components";
+import React, {Component} from 'react';
+import AddComponent from './Add';
+import Todo from './Todo.js';
+import lista from './constants.js';
+import styled from 'styled-components';
 
 const ListComp = styled.p`
     font: normal 12px sans-serif;
@@ -38,12 +38,16 @@ const ListComp = styled.p`
 export default class Layout extends Component {
     constructor () {
         super();
-        this.state = {"checkedTodos": [],
-            "todos": lista};
+        let todos,checkedTodos;
+        todos = lista.filter((todo) => todo.done===false);
+        checkedTodos = lista.filter((todo) => todo.done===true);
+        this.state = {'checkedTodos': checkedTodos,
+            'todos': todos};
         this.removeToDo = this.removeToDo.bind(this);
         this.setChecked = this.setChecked.bind(this);
         this.setUnChecked = this.setUnChecked.bind(this);
         this.addToDo = this.addToDo.bind(this);
+        this.modifyText = this.modifyText.bind(this);
     }
 
     removeToDo (id) {
@@ -51,10 +55,10 @@ export default class Layout extends Component {
             {todos} = this.state;
         let [...newList] = todos.filter((todo) => todo.id !== id);
         if (newList.length < todos.length) {
-            this.setState({"todos": newList});
+            this.setState({'todos': newList});
         } else {
             newList = checkedTodos.filter((todo) => todo.id !== id);
-            this.setState({"checkedTodos": newList});
+            this.setState({'checkedTodos': newList});
         }
     }
 
@@ -62,6 +66,7 @@ export default class Layout extends Component {
         const {checkedTodos} = this.state,
             {todos} = this.state,
             [newTodo] = todos.filter((todo) => todo.id === id);
+            newTodo.done = true;
         checkedTodos.push(newTodo);
         this.setState({checkedTodos}, this.removeToDo(id));
     }
@@ -71,8 +76,9 @@ export default class Layout extends Component {
             {todos} = this.state,
             vnewcList = checkedTodos.filter((todo) => todo.id !== id),
             [vnewTodo] = checkedTodos.filter((todo) => todo.id === id);
+            vnewTodo.done = false;
         todos.push(vnewTodo);
-        this.setState({"checkedTodos": vnewcList,
+        this.setState({'checkedTodos': vnewcList,
             todos});
     }
 
@@ -82,12 +88,32 @@ export default class Layout extends Component {
         this.setState({todos});
     }
 
+    modifyText (id, newText){
+        const {checkedTodos} = this.state,
+            {todos} = this.state;
+        let found = false;
+        for (let i=0; i<todos.length && !found; i++){
+            if (todos[i].id===id){
+                todos[i].text = newText;
+            }
+        }
+        if (!found){
+            for (let i=0; i<checkedTodos.length && !found; i++){
+                if (checkedTodos[i].id===id){
+                    checkedTodos[i].text = newText;
+                }
+            }
+        }   
+        this.setState({'todos': todos,'checkedTodos': checkedTodos});    
+    }
+        
     render () {
         const {checkedTodos} = this.state,
             checked = checkedTodos.map((todo) => <Todo
                 done={todo.done}
                 id={todo.id}
                 key={`todo_${todo.id}`}
+                modifyText={this.modifyText}
                 ref={todo.id}
                 removeToDo={this.removeToDo}
                 setChecked={this.setUnChecked}
@@ -99,6 +125,7 @@ export default class Layout extends Component {
                 done={todo.done}
                 id={todo.id}
                 key={`todo_${todo.id}`}
+                modifyText={this.modifyText}
                 ref={todo.id}
                 removeToDo={this.removeToDo}
                 setChecked={this.setChecked}
@@ -108,13 +135,13 @@ export default class Layout extends Component {
             <div>
                 <ListTitle>
                     <p>
-                        {"My ToDO List"}
+                        {'My ToDO List'}
                     </p>
                 </ListTitle>
                 <ListComp>
                     <LittleTitle>
                         <p>
-                            {"Stuff to do:"}
+                            {'Stuff to do:'}
                         </p>
                     </LittleTitle>
                     {todosMod}
@@ -125,7 +152,7 @@ export default class Layout extends Component {
                     />
                     <LittleTitle>
                         <p>
-                            {"Stuff already done:"}
+                            {'Stuff already done:'}
                         </p>
                     </LittleTitle>
                     {checked}

@@ -12,9 +12,16 @@ const AddComp = styled.span`
     background-color: "rgb(118, 230, 44)";
 `,
     BtnAdd = styled.input`
-        background-color: rgb(11, 224, 107);
+        background-color: rgb(163, 255, 43);
         cursor: pointer;
         margin:2px;
+        border: 0;
+        border-bottom: 1px grey solid;
+`,
+    BtnAddButton = styled.input`
+    background-color: rgb(163, 255, 43);
+    cursor: pointer;
+    margin:2px;
 `,
     MyLable = styled.span`
         background-color: rgb(17, 105, 5);
@@ -114,14 +121,13 @@ export default class AddComponent extends React.Component {
         const {labelErrClass, emptyErr} = this.state;
         return (
             <AddComp onKeyPress={this.handleKey}>
-                <input type="Checkbox" />
                 <BtnAdd
                     id="todo_id"
                     onChange={this.handleValue}
                     ref={this.myRef}
                     type="text"
                 />
-                <BtnAdd
+                <BtnAddButton
                     id="add_button_id"
                     onClick={this.handleAddToDoCb}
                     type="button"

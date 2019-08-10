@@ -13,6 +13,13 @@
     },
     "plugins": ["react"],
     "rules": {
+      "react/no-set-state": "off",
+      "max-lines-per-function": "off",
+      "multiline-comment-style": "off",
+      "react/jsx-max-depth": ["off"],
+      "react/jsx-no-bind": "off",
+      "react/jsx-wrap-multilines": "off",
+      "quotes": [1, "single"],
       "no-console": "off",
       "strict": ["error", "global"],
       "curly": "warn",

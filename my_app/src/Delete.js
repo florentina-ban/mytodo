@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import React from "react";
-import styled from "styled-components";
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
 
 const BtnText = styled.span`
     color: black;
@@ -21,7 +21,7 @@ const BtnText = styled.span`
         return (
             <DeleteBtn onClick={removeToDo.bind(id)}>
                 <BtnText>
-                    {"X"}
+                    {'X'}
                 </BtnText>
             </DeleteBtn>
         );
@@ -31,11 +31,11 @@ const BtnText = styled.span`
 export default DeleteTodo;
 
 DeleteTodo.defaultProps = {
-    "id": "",
-    "removeToDo": ""
+    'id': '',
+    'removeToDo': ''
 };
 
 DeleteTodo.propTypes = {
-    "id": PropTypes.string,
-    "removeToDo": PropTypes.func
+    'id': PropTypes.string,
+    'removeToDo': PropTypes.func
 };
