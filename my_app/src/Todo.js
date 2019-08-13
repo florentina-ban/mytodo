@@ -11,7 +11,16 @@ const CheckBox = styled.input`
     margin:5px;
 `,
     MyInput = styled.input`
-    background-color: rgb(163, 255, 43);
+    background-color: ${(props) => {
+        if (props.color === 'green') {
+            return 'rgb(163, 255, 43)';
+        }
+        if (props.color === 'blue') {
+            return 'rgb(18, 222, 113)';
+        }
+        return 'rgb(202, 212, 13)';
+    }
+};
     border : 0;
     width: 100px;
 `,
@@ -122,11 +131,12 @@ export default class Todo extends React.Component {
     }
 
     getHtmlTag (text) {
-        const {id} = this.props,
+        const {id, color} = this.props,
             {isClicked} = this.state;
         if (isClicked) {
             return (
                 <MyInput
+                    color={color}
                     id={id}
                     onBlur={() => {
                         const event = {'key': 'Enter'};
