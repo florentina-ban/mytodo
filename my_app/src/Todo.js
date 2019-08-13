@@ -20,10 +20,13 @@ const CheckBox = styled.input`
     margin: 3px;
     text-align: left;
     background-color: ${(props) => {
-        if (props.cheked === 'nck') {
+        if (props.color === 'green') {
             return 'rgb(163, 255, 43)';
         }
-        return 'rgb(242, 203, 48)';
+        if (props.color === 'blue') {
+            return 'rgb(18, 222, 113)';
+        }
+        return 'rgb(202, 212, 13)';
     }
 };
     text-decoration: ${(props) => {
@@ -39,6 +42,7 @@ export default class Todo extends React.Component {
 
     static propTypes = {
         'ck': PropTypes.bool,
+        'color': PropTypes.string,
         'done': PropTypes.bool,
         'id': PropTypes.string,
         'modifyText': PropTypes.func,
@@ -49,6 +53,7 @@ export default class Todo extends React.Component {
 
     static defaultProps = {
         'ck': true,
+        'color': '',
         'done': true,
         'id': '',
         'modifyText': () => null,
@@ -76,7 +81,6 @@ export default class Todo extends React.Component {
         this.handleOnClick = this.handleOnClick.bind(this);
         this.getHtmlTag = this.getHtmlTag.bind(this);
         this.handleSaveModifiedTodo = this.handleSaveModifiedTodo.bind(this);
-
         this.inputRef = React.createRef();
     }
 
@@ -124,6 +128,10 @@ export default class Todo extends React.Component {
             return (
                 <MyInput
                     id={id}
+                    onBlur={() => {
+                        const event = {'key': 'Enter'};
+                        this.handleSaveModifiedTodo(event);
+                    }}
                     onKeyPress={this.handleSaveModifiedTodo}
                     placeholder={text}
                     ref={this.inputRef}
@@ -154,7 +162,7 @@ export default class Todo extends React.Component {
     }
 
     render () {
-        const {done, id} = this.props,
+        const {id, color} = this.props,
             {className, text} = this.state;
         return (
             <ListStyle>
@@ -163,7 +171,10 @@ export default class Todo extends React.Component {
                     onChange={this.handleChangeClassName}
                     type="checkbox"
                 />
-                <MyTodoItem cheked={className}>
+                <MyTodoItem
+                    cheked={className}
+                    color={color}
+                >
                     {this.getHtmlTag(text)}
                     {' '}
                 </MyTodoItem>

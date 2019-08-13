@@ -9,17 +9,44 @@ const AddComp = styled.span`
     padding: 3px;
     margin: 3px;
     text-align: left;
-    background-color: "rgb(118, 230, 44)";
+    background-color: ${(props) => {
+        if (props.color === 'green') {
+            return 'rgb(163, 255, 43)';
+        }
+        if (props.color === 'blue') {
+            return 'rgb(18, 222, 113)';
+        }
+        return 'rgb(202, 212, 13)';
+    }
+};
 `,
     BtnAdd = styled.input`
-        background-color: rgb(163, 255, 43);
-        cursor: pointer;
-        margin:2px;
-        border: 0;
-        border-bottom: 1px grey solid;
+    background-color: ${(props) => {
+        if (props.color === 'green') {
+            return 'rgb(163, 255, 43)';
+        }
+        if (props.color === 'blue') {
+            return 'rgb(18, 222, 113)';
+        }
+        return 'rgb(202, 212, 13)';
+    }
+};
+    cursor: pointer;
+    margin:2px;
+    border: 0;
+    border-bottom: 1px grey solid;
 `,
     BtnAddButton = styled.input`
-    background-color: rgb(163, 255, 43);
+    background-color:  ${(props) => {
+        if (props.color === 'green') {
+            return 'rgb(163, 255, 43)';
+        }
+        if (props.color === 'blue') {
+            return 'rgb(18, 222, 113)';
+        }
+        return 'rgb(202, 212, 13)';
+    }
+};
     cursor: pointer;
     margin:2px;
 `,
@@ -35,14 +62,26 @@ const AddComp = styled.span`
         if (props.error === 'errorClass') {
             return 'rgb(17, 105, 5)';
         }
-        return 'rgb(161, 245, 51)';
+        if (props.color === 'green') {
+            return 'rgb(163, 255, 43)';
+        }
+        if (props.color === 'blue') {
+            return 'rgb(18, 222, 113)';
+        }
+        return 'rgb(202, 212, 13)';
     }
 };
         color: ${(props) => {
         if (props.error === 'errorClass') {
             return 'rgb(161, 245, 51)';
         }
-        return 'rgb(161, 245, 51)';
+        if (props.color === 'green') {
+            return 'rgb(163, 255, 43)';
+        }
+        if (props.color === 'blue') {
+            return 'rgb(18, 222, 113)';
+        }
+        return 'rgb(202, 212, 13)';
     }
 };
         margin: 2px;
@@ -56,7 +95,8 @@ export default class AddComponent extends React.Component {
             PropTypes.bool,
             PropTypes.string,
             PropTypes.string
-        ]))
+        ])),
+        'color': PropTypes.string
     }
 
     static defaultProps = {
@@ -64,7 +104,8 @@ export default class AddComponent extends React.Component {
             const aNumber = 0;
             return aNumber;
         },
-        'allToDos': []
+        'allToDos': [],
+        'color': ''
     }
 
     constructor (props) {
@@ -77,9 +118,12 @@ export default class AddComponent extends React.Component {
     }
 
     handleKey (event) {
+
         if (event.key === 'Enter') {
             this.handleAddToDoCb();
+            event.preventDefault();
         }
+
     }
 
     handleValue () {
@@ -110,7 +154,6 @@ export default class AddComponent extends React.Component {
                     'done': false,
                     'id': idG,
                     'text': todoText
-
                 };
             addToDo(stuff);
             this.setState({'labelErrClass': 'errorClass'});
@@ -118,22 +161,31 @@ export default class AddComponent extends React.Component {
     }
 
     render () {
-        const {labelErrClass, emptyErr} = this.state;
+        const {labelErrClass, emptyErr} = this.state,
+            {color} = this.props;
         return (
-            <AddComp onKeyPress={this.handleKey}>
+            <AddComp
+                color={color}
+                onKeyPress={this.handleKey}
+            >
                 <BtnAdd
+                    color={color}
                     id="todo_id"
                     onChange={this.handleValue}
                     ref={this.myRef}
                     type="text"
                 />
                 <BtnAddButton
+                    color={color}
                     id="add_button_id"
                     onClick={this.handleAddToDoCb}
                     type="button"
                     value="+"
                 />
-                <MyLable2 error={labelErrClass}>
+                <MyLable2
+                    color={color}
+                    error={labelErrClass}
+                >
                     {'not ready yet !'}
                 </MyLable2>
                 <EmptyError errMessage={emptyErr} />

@@ -4,21 +4,51 @@ import Todo from './Todo.js';
 import lista from './constants.js';
 import styled from 'styled-components';
 
-const ListComp = styled.p`
-    font: normal 12px sans-serif;
+const AllComp = styled.form`
+    background-color: ${(props) => {
+        if (props.color === 'green') {
+            return 'rgb(163, 255, 43)';
+        }
+        if (props.color === 'yellow') {
+            return 'rgb(202, 212, 13)';
+        }
+        return 'rgb(18, 222, 113)';
+    }
+};
+    display: flex;
+    flex-direction: row;
+    width: 50%;
     margin: auto;
-    border: 2px rgb(17, 105, 5) solid; 
-    background-color: rgb(163, 255, 43);  
-    padding:10px;
-    width: 60%;
-    justify-content: center;
-    align-items:flex-start;
+`,
+    ColorButton = styled.input`
+    background-color:  ${(props) => {
+        if (props.color === 'green') {
+            return 'rgb(163, 255, 43)';
+        }
+        if (props.color === 'yellow') {
+            return 'rgb(202, 212, 13)';
+        }
+        return 'rgb(18, 222, 113)';
+    }
+};
+    cursor: pointer;
+    width: 100%; 
+    height: 50px;
+`,
+    ColorComponent = styled.form`
+    width: 20%;
+    border: 1px rgb(17, 105, 5) solid;
+    font: normal 12px sans-serif;
+
+`,
+    ListComp = styled.form`
+    font: normal 12px sans-serif;
+    border: 1px rgb(17, 105, 5) solid; 
+    width: 80%;
 `,
     ListTitle = styled.h1`
     background-color: rgb(17, 105, 5);
-    width: 60%;
     margin: auto;
-    margin-top: 20px;
     padding: 10px;
     text-align: center;
     margin-bottom: 20px;
@@ -26,8 +56,17 @@ const ListComp = styled.p`
     color: rgb(161, 245, 51);
 `,
     LittleTitle = styled(ListTitle)`
-    width: 30%;
-    background-color: rgb(163, 255, 43);
+    width: 60%;
+    background-color:${(props) => {
+        if (props.color === 'green') {
+            return 'rgb(163, 255, 43)';
+        }
+        if (props.color === 'yellow') {
+            return 'rgb(202, 212, 13)';
+        }
+        return 'rgb(18, 222, 113)';
+    }
+};
     color:  rgb(17, 105, 5);
     margin-left: 20px;
     font-size: 15px;
@@ -43,12 +82,14 @@ export default class Layout extends Component {
         todos = lista.filter((todo) => todo.done === false);
         checkedTodos = lista.filter((todo) => todo.done === true);
         this.state = {checkedTodos,
+            'color': 'green',
             todos};
         this.removeToDo = this.removeToDo.bind(this);
         this.setChecked = this.setChecked.bind(this);
         this.setUnChecked = this.setUnChecked.bind(this);
         this.addToDo = this.addToDo.bind(this);
         this.modifyText = this.modifyText.bind(this);
+        this.changeColor = this.changeColor.bind(this);
     }
 
     removeToDo (id) {
@@ -109,10 +150,14 @@ export default class Layout extends Component {
         }
     }
 
+    changeColor (color) {
+        this.setState({color});
+    }
 
     render () {
-        const {checkedTodos} = this.state,
+        const {checkedTodos, color} = this.state,
             checked = checkedTodos.map((todo) => <Todo
+                color={color}
                 done={todo.done}
                 id={todo.id}
                 key={`todo_${todo.id}`}
@@ -125,6 +170,7 @@ export default class Layout extends Component {
             {todos} = this.state,
             todosMod = todos.map((todo) => <Todo
                 ck={false}
+                color={color}
                 done={todo.done}
                 id={todo.id}
                 key={`todo_${todo.id}`}
@@ -141,25 +187,54 @@ export default class Layout extends Component {
                         {'My ToDO List'}
                     </p>
                 </ListTitle>
-                <ListComp>
-                    <LittleTitle>
-                        <p>
-                            {'Stuff to do:'}
-                        </p>
-                    </LittleTitle>
-                    {todosMod}
-                    <AddComponent
-                        addToDo={this.addToDo}
-                        allToDos={checkedTodos}
-                        id="add_id"
-                    />
-                    <LittleTitle>
-                        <p>
-                            {'Stuff already done:'}
-                        </p>
-                    </LittleTitle>
-                    {checked}
-                </ListComp>
+                <AllComp color={color}>
+                    <ListComp color={color}>
+                        <LittleTitle color={color}>
+                            <p>
+                                {'Stuff to do:'}
+                            </p>
+                        </LittleTitle>
+                        {todosMod}
+                        <AddComponent
+                            addToDo={this.addToDo}
+                            allToDos={checkedTodos}
+                            color={color}
+                            id="add_id"
+                        />
+                        <LittleTitle color={color}>
+                            <p>
+                                {'Stuff already done:'}
+                            </p>
+                        </LittleTitle>
+                        {checked}
+                    </ListComp>
+                    <ColorComponent>
+                        <ColorButton
+                            color="green"
+                            onClick={() => {
+                                this.changeColor('green');
+                            }}
+                            type="button"
+                            value="Try it!"
+                        />
+                        <ColorButton
+                            color="blue"
+                            onClick={() => {
+                                this.changeColor('blue');
+                            }}
+                            type="button"
+                            value="Try it!"
+                        />
+                        <ColorButton
+                            color="yellow"
+                            onClick={() => {
+                                this.changeColor('yellow');
+                            }}
+                            type="button"
+                            value="Try it!"
+                        />
+                    </ColorComponent>
+                </AllComp>
             </div>
         );
     }
