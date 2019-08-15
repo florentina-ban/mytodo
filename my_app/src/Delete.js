@@ -11,15 +11,29 @@ const BtnText = styled.span`
     font-size:13px;
 `,
     DeleteBtn = styled.span`
-    background-color: rgb(132, 168, 2);
+    background-color: ${(props) => {
+        if (props.mouseOver){
+            return 'rgb(247, 15, 15)';
+        }
+        return 'rgb(132, 168, 2)';
+    }
+};
     border-radius: 40%;
     cursor: pointer;
 `,
 
-    DeleteTodo = function DeleteTodo ({id, removeToDo}) {
-
+    DeleteTodo = function DeleteTodo ({id, removeToDo, mouseOver}) {
+        if (mouseOver){
+            return(
+            <DeleteBtn onClick={removeToDo.bind(id)} mouseOver={mouseOver}>
+                <BtnText>
+                    {'X'}
+                </BtnText>
+            </DeleteBtn>
+            );
+        }
         return (
-            <DeleteBtn onClick={removeToDo.bind(id)}>
+            <DeleteBtn onClick={removeToDo.bind(id)} mouseOver={mouseOver}>
                 <BtnText>
                     {'X'}
                 </BtnText>

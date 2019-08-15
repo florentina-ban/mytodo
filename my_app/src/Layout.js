@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import AddComponent from './Add';
+import MyTitle from './TitleComp.js';
 import Todo from './Todo.js';
 import lista from './constants.js';
 import styled from 'styled-components';
@@ -17,6 +18,7 @@ const AllComp = styled.form`
 };
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     width: 50%;
     margin: auto;
 `,
@@ -33,18 +35,15 @@ const AllComp = styled.form`
 };
     cursor: pointer;
     width: 100%; 
-    height: 50px;
+    height: 20px;
 `,
     ColorComponent = styled.form`
-    width: 20%;
-    border: 1px rgb(17, 105, 5) solid;
+    width: 15%;
     font: normal 12px sans-serif;
-
 `,
     ListComp = styled.form`
     font: normal 12px sans-serif;
-    border: 1px rgb(17, 105, 5) solid; 
-    width: 80%;
+    width: 85%;
 `,
     ListTitle = styled.h1`
     background-color: rgb(17, 105, 5);
@@ -73,6 +72,7 @@ const AllComp = styled.form`
     text-align: left;
     border: 0px;
     margin-bottom: 0;
+    padding: 0;
 `;
 export default class Layout extends Component {
     constructor () {
@@ -83,6 +83,7 @@ export default class Layout extends Component {
         checkedTodos = lista.filter((todo) => todo.done === true);
         this.state = {checkedTodos,
             'color': 'green',
+            'title': 'Stuff to do',
             todos};
         this.removeToDo = this.removeToDo.bind(this);
         this.setChecked = this.setChecked.bind(this);
@@ -90,7 +91,9 @@ export default class Layout extends Component {
         this.addToDo = this.addToDo.bind(this);
         this.modifyText = this.modifyText.bind(this);
         this.changeColor = this.changeColor.bind(this);
+        this.getNumberOfChecked = this.getNumberOfChecked.bind(this);
     }
+
 
     removeToDo (id) {
         const {checkedTodos} = this.state,
@@ -150,6 +153,29 @@ export default class Layout extends Component {
         }
     }
 
+    getNumberOfChecked(color){
+        const {checkedTodos} = this.state;
+        if (checkedTodos.length>1){
+            return (
+                <LittleTitle color={color}>
+                    <p>
+                    {checkedTodos.length} {'todos already done:'}
+                    </p>
+                </LittleTitle>
+            );
+        }
+        if (checkedTodos.length){
+            return (
+                <LittleTitle color={color}>
+                    <p>
+                    {checkedTodos.length} {'todo already done:'}
+                    </p>
+                </LittleTitle>
+            );
+        }
+        return ; 
+    }
+
     changeColor (color) {
         this.setState({color});
     }
@@ -183,17 +209,11 @@ export default class Layout extends Component {
         return (
             <div>
                 <ListTitle>
-                    <p>
-                        {'My ToDO List'}
-                    </p>
+                    {'My ToDo lists'}
                 </ListTitle>
                 <AllComp color={color}>
                     <ListComp color={color}>
-                        <LittleTitle color={color}>
-                            <p>
-                                {'Stuff to do:'}
-                            </p>
-                        </LittleTitle>
+                        <MyTitle text='new title' color={color}/>
                         {todosMod}
                         <AddComponent
                             addToDo={this.addToDo}
@@ -201,11 +221,7 @@ export default class Layout extends Component {
                             color={color}
                             id="add_id"
                         />
-                        <LittleTitle color={color}>
-                            <p>
-                                {'Stuff already done:'}
-                            </p>
-                        </LittleTitle>
+                        {this.getNumberOfChecked(color)}
                         {checked}
                     </ListComp>
                     <ColorComponent>
