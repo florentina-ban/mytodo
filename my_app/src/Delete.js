@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const BtnText = styled.span`
     color: ${(props) => {
-        if (props.mouseOver){
+        if (props.mouseOver) {
             return 'black';
         }
         if (props.color === 'green') {
@@ -38,18 +38,32 @@ const BtnText = styled.span`
 `,
 
     DeleteTodo = function DeleteTodo ({id, removeToDo, mouseOver, color}) {
-        if (mouseOver){
-            return(
-            <DeleteBtn onClick={removeToDo.bind(id)} mouseOver={mouseOver} color={color}>
-                <BtnText mouseOver={mouseOver} color={color}>
-                    {'X'}
-                </BtnText>
-            </DeleteBtn>
+        if (mouseOver) {
+            return (
+                <DeleteBtn
+                    color={color}
+                    mouseOver={mouseOver}
+                    onClick={removeToDo.bind(id)}
+                >
+                    <BtnText
+                        color={color}
+                        mouseOver={mouseOver}
+                    >
+                        {'X'}
+                    </BtnText>
+                </DeleteBtn>
             );
         }
         return (
-            <DeleteBtn onClick={removeToDo.bind(id)} color={color} mouseOver={mouseOver}>
-                <BtnText mouseOver={mouseOver} color={color}>
+            <DeleteBtn
+                color={color}
+                mouseOver={mouseOver}
+                onClick={removeToDo.bind(id)}
+            >
+                <BtnText
+                    color={color}
+                    mouseOver={mouseOver}
+                >
                     {'X'}
                 </BtnText>
             </DeleteBtn>
@@ -60,11 +74,15 @@ const BtnText = styled.span`
 export default DeleteTodo;
 
 DeleteTodo.defaultProps = {
+    'color': '',
     'id': '',
+    'mouseOver': '',
     'removeToDo': ''
 };
 
 DeleteTodo.propTypes = {
+    'color': PropTypes.string,
     'id': PropTypes.string,
+    'mouseOver': PropTypes.func,
     'removeToDo': PropTypes.func
 };

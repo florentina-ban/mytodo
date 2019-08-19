@@ -59,7 +59,6 @@ export default class Todo extends React.Component {
     static propTypes = {
         'ck': PropTypes.bool,
         'color': PropTypes.string,
-        'done': PropTypes.bool,
         'id': PropTypes.string,
         'modifyText': PropTypes.func,
         'removeToDo': PropTypes.func,
@@ -70,7 +69,6 @@ export default class Todo extends React.Component {
     static defaultProps = {
         'ck': true,
         'color': '',
-        'done': true,
         'id': '',
         'modifyText': () => null,
         'removeToDo': () => null,
@@ -150,7 +148,7 @@ export default class Todo extends React.Component {
                     id={id}
                     onBlur={() => {
                         const event = {'key': 'Enter'};
-                        this.handleSaveModifiedTodo(event,text);
+                        this.handleSaveModifiedTodo(event, text);
                     }}
                     onKeyPress={this.handleSaveModifiedTodo}
                     placeholder={text}
@@ -160,15 +158,18 @@ export default class Todo extends React.Component {
             );
         }
         return (
-            <MyTodoItem cheked={className} color={color}>
+            <MyTodoItem
+                cheked={className}
+                color={color}
+            >
                 <span onClick={this.handleOnClick}>
-                {text}
+                    {text}
                 </span>
             </MyTodoItem>
         );
     }
 
-    handleSaveModifiedTodo (event,text) {
+    handleSaveModifiedTodo (event, text) {
         const {id, modifyText} = this.props;
         if (event.key === 'Enter') {
             const newText = this.inputRef.current.value.trim();
@@ -178,19 +179,20 @@ export default class Todo extends React.Component {
                     modifyText(id, newText);
                 });
             } else {
-                this.setState({'text': text, 'isClicked': false});
+                this.setState({'isClicked': false,
+                    text});
             }
         }
     }
 
-    handleMouseOver(){
+    handleMouseOver () {
         const {mouseOver} = this.state;
         this.setState({'mouseOver': !mouseOver});
     }
 
     render () {
         const {id, color} = this.props,
-            {className, mouseOver, text} = this.state;
+            {mouseOver, text} = this.state;
         return (
             <ListStyle>
                 <CheckBox
@@ -198,14 +200,17 @@ export default class Todo extends React.Component {
                     onChange={this.handleChangeClassName}
                     type="checkbox"
                 />
-                <WrapTag onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOver}>
+                <WrapTag
+                    onMouseOut={this.handleMouseOver}
+                    onMouseOver={this.handleMouseOver}
+                >
                     {this.getHtmlTag(text)}
                     {' '}
                     <DeleteTodo
                         color={color}
                         id={id}
-                        removeToDo={this.deleteToDo}
                         mouseOver={mouseOver}
+                        removeToDo={this.deleteToDo}
                     />
                 </WrapTag>
             </ListStyle>

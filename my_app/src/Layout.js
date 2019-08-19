@@ -83,7 +83,6 @@ export default class Layout extends Component {
         checkedTodos = lista.filter((todo) => todo.done === true);
         this.state = {checkedTodos,
             'color': 'green',
-            'title': 'Stuff to do',
             todos};
         this.removeToDo = this.removeToDo.bind(this);
         this.setChecked = this.setChecked.bind(this);
@@ -153,27 +152,34 @@ export default class Layout extends Component {
         }
     }
 
-    getNumberOfChecked(color){
-        const {checkedTodos} = this.state;
-        if (checkedTodos.length>1){
+    getNumberOfChecked (color) {
+        const {checkedTodos} = this.state,
+            one = 1;
+        if (checkedTodos.length > one) {
             return (
                 <LittleTitle color={color}>
                     <p>
-                    {checkedTodos.length} {'todos already done:'}
+                        {checkedTodos.length}
+                        {' '}
+                        {'todos already done:'}
                     </p>
                 </LittleTitle>
             );
         }
-        if (checkedTodos.length){
+        if (checkedTodos.length) {
             return (
                 <LittleTitle color={color}>
                     <p>
-                    {checkedTodos.length} {'todo already done:'}
+                        {checkedTodos.length}
+                        {' '}
+                        {'todo already done:'}
                     </p>
                 </LittleTitle>
             );
         }
-        return ; 
+        return (
+            <p />
+        );
     }
 
     changeColor (color) {
@@ -213,7 +219,9 @@ export default class Layout extends Component {
                 </ListTitle>
                 <AllComp color={color}>
                     <ListComp color={color}>
-                        <MyTitle text='new title' color={color}/>
+                        <MyTitle
+                            color={color}
+                        />
                         {todosMod}
                         <AddComponent
                             addToDo={this.addToDo}

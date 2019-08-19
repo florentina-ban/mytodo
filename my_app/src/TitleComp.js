@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -44,60 +45,78 @@ const ListTitle = styled.h1`
     width: 100px;
 `;
 
-export default class MyTitle extends React.Component{
-    constructor(props){
+export default class MyTitle extends React.Component {
+
+    static propTypes = {
+        'color': PropTypes.string,
+        'text': PropTypes.string
+    }
+
+    static defaultProps = {
+        'color': '',
+        'text': 'enter title'
+    }
+
+    constructor (props) {
         super(props);
-        this.state=({'clicked': false,
-            'text': props.text});
+        this.state = {'clicked': false,
+            'text': props.text};
         this.getHtmlTag = this.getHtmlTag.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleEnter = this.handleEnter.bind(this);
-        this.titleRef=React.createRef();
+        this.titleRef = React.createRef();
     }
 
-    getHtmlTag() {
+    getHtmlTag () {
         const {clicked, text} = this.state,
             {color} = this.props;
-        if (clicked){
+        if (clicked) {
             return (
-                <MyInput 
-                    placeholder={text} 
-                    color={color} 
-                    onKeyPress={this.handleEnter} 
+                <MyInput
+                    color={color}
                     onBlur={() => {
                         const event = {'key': 'Enter'};
                         this.handleEnter(event);
-                    }} 
-                    ref={this.titleRef}>    
-                </MyInput>
+                    }}
+                    onKeyPress={this.handleEnter}
+                    placeholder={text}
+                    ref={this.titleRef}
+                />
             );
         }
         return (
-            <span>{text}</span>
+            <span>
+                {text}
+            </span>
         );
     }
 
-    handleClick(){
+    handleClick () {
         const {clicked} = this.state;
-        if (!clicked)
+        if (!clicked) {
             this.setState({'clicked': !clicked});
-        
+        }
+
     }
 
-    handleEnter(event){
-        if (event.key==='Enter'){
-            const newTitle=this.titleRef.current.value.trim();
-            if (newTitle.length){
+    handleEnter (event) {
+        if (event.key === 'Enter') {
+            const newTitle = this.titleRef.current.value.trim();
+            if (newTitle.length) {
                 this.setState({'text': newTitle});
             }
             this.setState({'clicked': false});
         }
     }
-    render(){
+
+    render () {
         const {color} = this.props;
-        return(
-            <LittleTitle color={color} onClick={this.handleClick}>
-                {this.getHtmlTag()} 
+        return (
+            <LittleTitle
+                color={color}
+                onClick={this.handleClick}
+            >
+                {this.getHtmlTag()}
             </LittleTitle>
         );
     }
