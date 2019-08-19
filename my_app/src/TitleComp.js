@@ -61,13 +61,10 @@ export default class MyTitle extends React.Component {
         super(props);
         this.state = {'clicked': false,
             'text': props.text};
-        this.getHtmlTag = this.getHtmlTag.bind(this);
-        this.handleClick = this.handleClick.bind(this);
-        this.handleEnter = this.handleEnter.bind(this);
         this.titleRef = React.createRef();
     }
 
-    getHtmlTag () {
+    getHtmlTag = () => {
         const {clicked, text} = this.state,
             {color} = this.props;
         if (clicked) {
@@ -91,7 +88,7 @@ export default class MyTitle extends React.Component {
         );
     }
 
-    handleClick () {
+    handleClick = () => {
         const {clicked} = this.state;
         if (!clicked) {
             this.setState({'clicked': !clicked});
@@ -99,7 +96,7 @@ export default class MyTitle extends React.Component {
 
     }
 
-    handleEnter (event) {
+    handleEnter = (event) => {
         if (event.key === 'Enter') {
             const newTitle = this.titleRef.current.value.trim();
             if (newTitle.length) {

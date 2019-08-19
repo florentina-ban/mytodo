@@ -78,67 +78,44 @@ export default class Todo extends React.Component {
 
     constructor (props) {
         super(props);
-        const {text} = this.props;
-        if (props.ck === false) {
-            this.state = {'className': 'nck',
-                'isChecked': false,
-                'isClicked': false,
-                'mouseOver': false,
-                text};
-        } else {
-            this.state = {'className': 'ck',
-                'isChecked': true,
-                'isClicked': false,
-                'mouseOver': false,
-                text};
-        }
-        this.handleChangeClassName = this.handleChangeClassName.bind(this);
-        this.deleteToDo = this.deleteToDo.bind(this);
-        this.handleOnClick = this.handleOnClick.bind(this);
-        this.getHtmlTag = this.getHtmlTag.bind(this);
-        this.handleSaveModifiedTodo = this.handleSaveModifiedTodo.bind(this);
-        this.handleMouseOver = this.handleMouseOver.bind(this);
+        const {ck, text} = props;
+        this.state = {'className': this.getChecked(ck),
+            'isChecked': Boolean(ck),
+            'isClicked': false,
+            'mouseOver': false,
+            text};
         this.inputRef = React.createRef();
     }
 
-    handleChangeClassName () {
-        const {isChecked} = this.state;
-        let cl = '';
-        if (isChecked) {
-            cl = 'nck';
-        } else {
-            cl = 'ck';
+    getChecked = (ck) => {
+        if (ck) {
+            return 'ck';
         }
-        this.setState({'className': cl,
+        return 'nck';
+    }
+
+    handleChangeClassName = () => {
+        const {isChecked} = this.state,
+            {id, setChecked} = this.props,
+            className = this.getChecked(isChecked);
+        this.setState({className,
             'isChecked': !isChecked}, () => {
-            this.goOnFunction();
+            setChecked(id);
         });
     }
 
-    goOnFunction () {
-        const {isChecked} = this.state,
-            {ck, id, setChecked} = this.props;
-        if (isChecked && ck === false) {
-            setChecked(id);
-        } else
-        if (!isChecked && ck === true) {
-            setChecked(id);
-        }
-    }
-
-    deleteToDo () {
-        const {id} = this.props,
-            {removeToDo} = this.props;
+    deleteToDo = () => {
+        const {id, removeToDo} = this.props;
         removeToDo(id);
 
     }
 
-    handleOnClick () {
+    handleOnClick = () => {
         const {isClicked} = this.state;
         this.setState({'isClicked': !isClicked});
     }
 
-    getHtmlTag (text) {
+    getHtmlTag = (text) => {
         const {id, color} = this.props,
             {isClicked, className} = this.state;
         if (isClicked) {
@@ -147,8 +124,7 @@ export default class Todo extends React.Component {
                     color={color}
                     id={id}
                     onBlur={() => {
-                        const event = {'key': 'Enter'};
-                        this.handleSaveModifiedTodo(event, text);
+                        this.handleSaveModifiedTodo({'key': 'Enter'}, text);
                     }}
                     onKeyPress={this.handleSaveModifiedTodo}
                     placeholder={text}
@@ -169,7 +145,7 @@ export default class Todo extends React.Component {
         );
     }
 
-    handleSaveModifiedTodo (event, text) {
+    handleSaveModifiedTodo = (event, text) => {
         const {id, modifyText} = this.props;
         if (event.key === 'Enter') {
             const newText = this.inputRef.current.value.trim();
@@ -185,7 +161,7 @@ export default class Todo extends React.Component {
         }
     }
 
-    handleMouseOver () {
+    handleMouseOver = () => {
         const {mouseOver} = this.state;
         this.setState({'mouseOver': !mouseOver});
     }

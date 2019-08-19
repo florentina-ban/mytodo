@@ -25,6 +25,7 @@
       "curly": "warn",
       "linebreak-style": 0,
       "padded-blocks": "off",
+      "no-invalid-this": "off",
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
     }
   }

@@ -84,17 +84,9 @@ export default class Layout extends Component {
         this.state = {checkedTodos,
             'color': 'green',
             todos};
-        this.removeToDo = this.removeToDo.bind(this);
-        this.setChecked = this.setChecked.bind(this);
-        this.setUnChecked = this.setUnChecked.bind(this);
-        this.addToDo = this.addToDo.bind(this);
-        this.modifyText = this.modifyText.bind(this);
-        this.changeColor = this.changeColor.bind(this);
-        this.getNumberOfChecked = this.getNumberOfChecked.bind(this);
     }
 
-
-    removeToDo (id) {
+    removeToDo = (id) => {
         const {checkedTodos} = this.state,
             {todos} = this.state;
         let [...newList] = todos.filter((todo) => todo.id !== id);
@@ -106,7 +98,7 @@ export default class Layout extends Component {
         }
     }
 
-    setChecked (id) {
+    setChecked = (id) => {
         const {checkedTodos} = this.state,
             {todos} = this.state,
             [newTodo] = todos.filter((todo) => todo.id === id);
@@ -115,7 +107,7 @@ export default class Layout extends Component {
         this.setState({checkedTodos}, this.removeToDo(id));
     }
 
-    setUnChecked (id) {
+    setUnChecked = (id) => {
         const {checkedTodos} = this.state,
             {todos} = this.state,
             vnewcList = checkedTodos.filter((todo) => todo.id !== id),
@@ -126,33 +118,43 @@ export default class Layout extends Component {
             todos});
     }
 
-    addToDo (stuffToDo) {
+    addToDo = (stuffToDo) => {
         const {todos} = this.state;
         todos.push(stuffToDo);
         this.setState({todos});
     }
 
-    modifyText (id, newText) {
-        const {checkedTodos} = this.state,
-            {todos} = this.state,
-            rate = 1;
-        for (let counter = 0; counter < todos.length; counter += rate) {
-            if (todos[counter].id === id) {
-                todos[counter].text = newText;
-                this.setState({todos});
-                return;
+    modifyTextInArray = (par) => {
+        const rate = 1;
+        for (let counter = 0; counter < par.myArray.length; counter += rate) {
+            if (par.myArray[counter].id === par.id) {
+                par.myArray[counter].text = par.newText;
+                if (par.identifier === 'todos') {
+                    this.setState({'todos': par.myArray});
+                }
+                this.setState({'checkedTodos': par.myArray});
+                return true;
             }
         }
-        for (let counter = 0; counter < checkedTodos.length; counter += rate) {
-            if (checkedTodos[counter].id === id) {
-                checkedTodos[counter].text = newText;
-                this.setState({checkedTodos});
-                return;
-            }
-        }
+        return false;
     }
 
-    getNumberOfChecked (color) {
+    modifyText = (id, newText) => {
+        const {checkedTodos} = this.state,
+            {todos} = this.state;
+        if (!this.modifyTextInArray({id,
+            'identifier': 'todos',
+            'myArray': todos,
+            newText})) {
+            this.modifyTextInArray({id,
+                'identifier': 'other',
+                'myArray': checkedTodos,
+                newText});
+        }
+
+    }
+
+    getNumberOfChecked = (color) => {
         const {checkedTodos} = this.state,
             one = 1;
         if (checkedTodos.length > one) {
@@ -182,7 +184,7 @@ export default class Layout extends Component {
         );
     }
 
-    changeColor (color) {
+    changeColor = (color) => {
         this.setState({color});
     }
 

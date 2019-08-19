@@ -49,42 +49,6 @@ const AddComp = styled.span`
 };
     cursor: pointer;
     margin:2px;
-`,
-    MyLable = styled.span`
-        background-color: rgb(17, 105, 5);
-        color:rgb(161, 245, 51);
-        padding: 4px;
-        text-align: left;
-        margin:2px;
-`,
-    MyLable2 = styled(MyLable)`
-        background-color: ${(props) => {
-        if (props.error === 'errorClass') {
-            return 'rgb(17, 105, 5)';
-        }
-        if (props.color === 'green') {
-            return 'rgb(163, 255, 43)';
-        }
-        if (props.color === 'blue') {
-            return 'rgb(18, 222, 113)';
-        }
-        return 'rgb(202, 212, 13)';
-    }
-};
-        color: ${(props) => {
-        if (props.error === 'errorClass') {
-            return 'rgb(161, 245, 51)';
-        }
-        if (props.color === 'green') {
-            return 'rgb(163, 255, 43)';
-        }
-        if (props.color === 'blue') {
-            return 'rgb(18, 222, 113)';
-        }
-        return 'rgb(202, 212, 13)';
-    }
-};
-        margin: 2px;
 `;
 
 export default class AddComponent extends React.Component {
@@ -110,37 +74,18 @@ export default class AddComponent extends React.Component {
 
     constructor (props) {
         super(props);
-        this.state = {'labelErrClass': 'errorClass'};
         this.myRef = React.createRef();
-        this.handleKey = this.handleKey.bind(this);
-        this.handleValue = this.handleValue.bind(this);
-        this.handleAddToDoCb = this.handleAddToDoCb.bind(this);
+        this.state = {'emptyErr': ''};
     }
 
-    handleKey (event) {
-
+    handleKey = (event) => {
         if (event.key === 'Enter') {
             this.handleAddToDoCb();
             event.preventDefault();
         }
-
     }
 
-    handleValue () {
-        let errclass = '';
-        const zero = 0;
-        if (this.myRef.current.value.length === zero) {
-            errclass = 'errorClass';
-        } else {
-            errclass = 'noErrorClass';
-        }
-        this.setState({'labelErrClass': errclass});
-        if (this.myRef.current.value.length) {
-            this.setState({'emptyErr': ''});
-        }
-    }
-
-    handleAddToDoCb () {
+    handleAddToDoCb = () => {
         const todoText = this.myRef.current.value.trim(),
             {allToDos, addToDo} = this.props,
             zero = 0;
@@ -156,12 +101,11 @@ export default class AddComponent extends React.Component {
                     'text': todoText
                 };
             addToDo(stuff);
-            this.setState({'labelErrClass': 'errorClass'});
         }
     }
 
     render () {
-        const {labelErrClass, emptyErr} = this.state,
+        const {emptyErr} = this.state,
             {color} = this.props;
         return (
             <AddComp
@@ -171,7 +115,9 @@ export default class AddComponent extends React.Component {
                 <BtnAdd
                     color={color}
                     id="todo_id"
-                    onChange={this.handleValue}
+                    onChange={() => {
+                        this.setState({'emptyErr': ''});
+                    }}
                     ref={this.myRef}
                     type="text"
                 />
@@ -182,12 +128,6 @@ export default class AddComponent extends React.Component {
                     type="button"
                     value="+"
                 />
-                <MyLable2
-                    color={color}
-                    error={labelErrClass}
-                >
-                    {'not ready yet !'}
-                </MyLable2>
                 <EmptyError errMessage={emptyErr} />
             </AddComp>
         );
