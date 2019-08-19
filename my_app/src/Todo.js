@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const CheckBox = styled.input`
     cursor: pointer;
+    
 `,
     ListStyle = styled.li`
     list-style:none;
@@ -45,6 +46,12 @@ const CheckBox = styled.input`
         return 'line-through';
     }
 };
+    display: inline-block;
+    width: 70%;
+`,
+    WrapTag = styled.span`
+    display: inline-block;
+    width: 70%;
 `;
 
 export default class Todo extends React.Component {
@@ -135,7 +142,7 @@ export default class Todo extends React.Component {
 
     getHtmlTag (text) {
         const {id, color} = this.props,
-            {isClicked} = this.state;
+            {isClicked, className} = this.state;
         if (isClicked) {
             return (
                 <MyInput
@@ -153,9 +160,11 @@ export default class Todo extends React.Component {
             );
         }
         return (
-            <span onClick={this.handleOnClick} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOver}>
+            <MyTodoItem cheked={className} color={color}>
+                <span onClick={this.handleOnClick}>
                 {text}
-            </span>
+                </span>
+            </MyTodoItem>
         );
     }
 
@@ -189,19 +198,16 @@ export default class Todo extends React.Component {
                     onChange={this.handleChangeClassName}
                     type="checkbox"
                 />
-                <MyTodoItem
-                    cheked={className}
-                    color={color}
-                >
+                <WrapTag onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOver}>
                     {this.getHtmlTag(text)}
                     {' '}
                     <DeleteTodo
-                    id={id}
-                    removeToDo={this.deleteToDo}
-                    mouseOver={mouseOver}
-                />
-                </MyTodoItem>
-                
+                        color={color}
+                        id={id}
+                        removeToDo={this.deleteToDo}
+                        mouseOver={mouseOver}
+                    />
+                </WrapTag>
             </ListStyle>
         );
 

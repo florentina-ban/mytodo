@@ -3,7 +3,19 @@ import React from 'react';
 import styled from 'styled-components';
 
 const BtnText = styled.span`
-    color: black;
+    color: ${(props) => {
+        if (props.mouseOver){
+            return 'black';
+        }
+        if (props.color === 'green') {
+            return 'rgb(163, 255, 43)';
+        }
+        if (props.color === 'yellow') {
+            return 'rgb(202, 212, 13)';
+        }
+        return 'rgb(18, 222, 113)';
+    }
+};
     font-weight: 800;
     padding: 3px;
     font-family: sans-serif
@@ -12,29 +24,32 @@ const BtnText = styled.span`
 `,
     DeleteBtn = styled.span`
     background-color: ${(props) => {
-        if (props.mouseOver){
-            return 'rgb(247, 15, 15)';
+        if (props.color === 'green') {
+            return 'rgb(163, 255, 43)';
         }
-        return 'rgb(132, 168, 2)';
+        if (props.color === 'yellow') {
+            return 'rgb(202, 212, 13)';
+        }
+        return 'rgb(18, 222, 113)';
     }
 };
     border-radius: 40%;
     cursor: pointer;
 `,
 
-    DeleteTodo = function DeleteTodo ({id, removeToDo, mouseOver}) {
+    DeleteTodo = function DeleteTodo ({id, removeToDo, mouseOver, color}) {
         if (mouseOver){
             return(
-            <DeleteBtn onClick={removeToDo.bind(id)} mouseOver={mouseOver}>
-                <BtnText>
+            <DeleteBtn onClick={removeToDo.bind(id)} mouseOver={mouseOver} color={color}>
+                <BtnText mouseOver={mouseOver} color={color}>
                     {'X'}
                 </BtnText>
             </DeleteBtn>
             );
         }
         return (
-            <DeleteBtn onClick={removeToDo.bind(id)} mouseOver={mouseOver}>
-                <BtnText>
+            <DeleteBtn onClick={removeToDo.bind(id)} color={color} mouseOver={mouseOver}>
+                <BtnText mouseOver={mouseOver} color={color}>
                     {'X'}
                 </BtnText>
             </DeleteBtn>
