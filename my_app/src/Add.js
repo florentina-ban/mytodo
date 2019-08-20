@@ -10,25 +10,39 @@ const AddComp = styled.span`
     margin: 3px;
     text-align: left;
     background-color: ${(props) => {
-        if (props.color === 'green') {
-            return 'rgb(163, 255, 43)';
+        switch (props.color) {
+        case 'color1':
+            return '#5ac18e';
+        case 'color2':
+            return '#ffc0cb';
+        case 'color3':
+            return '#00dce0';
+        case 'color4':
+            return '#9886a7';
+        case 'color5':
+            return '#79bbb9';
+        default:
+            return '#fa8072';
         }
-        if (props.color === 'blue') {
-            return 'rgb(18, 222, 113)';
-        }
-        return 'rgb(202, 212, 13)';
     }
 };
 `,
     BtnAdd = styled.input`
     background-color: ${(props) => {
-        if (props.color === 'green') {
-            return 'rgb(163, 255, 43)';
+        switch (props.color) {
+        case 'color1':
+            return '#5ac18e';
+        case 'color2':
+            return '#ffc0cb';
+        case 'color3':
+            return '#00dce0';
+        case 'color4':
+            return '#9886a7';
+        case 'color5':
+            return '#79bbb9';
+        default:
+            return '#fa8072';
         }
-        if (props.color === 'blue') {
-            return 'rgb(18, 222, 113)';
-        }
-        return 'rgb(202, 212, 13)';
     }
 };
     cursor: pointer;
@@ -37,18 +51,25 @@ const AddComp = styled.span`
     border-bottom: 1px grey solid;
 `,
     BtnAddButton = styled.input`
-    background-color:  ${(props) => {
-        if (props.color === 'green') {
-            return 'rgb(163, 255, 43)';
+    background-color: ${(props) => {
+        switch (props.color) {
+        case 'color1':
+            return '#5ac18e';
+        case 'color2':
+            return '#ffc0cb';
+        case 'color3':
+            return '#00dce0';
+        case 'color4':
+            return '#9886a7';
+        case 'color5':
+            return '#79bbb9';
+        default:
+            return '#fa8072';
         }
-        if (props.color === 'blue') {
-            return 'rgb(18, 222, 113)';
-        }
-        return 'rgb(202, 212, 13)';
     }
 };
     cursor: pointer;
-    margin:2px;
+    border: 0;
 `;
 
 export default class AddComponent extends React.Component {
@@ -128,7 +149,10 @@ export default class AddComponent extends React.Component {
                     type="button"
                     value="+"
                 />
-                <EmptyError errMessage={emptyErr} />
+                <EmptyError
+                    color={color}
+                    errMessage={emptyErr}
+                />
             </AddComp>
         );
     }

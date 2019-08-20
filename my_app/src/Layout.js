@@ -7,66 +7,86 @@ import styled from 'styled-components';
 
 const AllComp = styled.form`
     background-color: ${(props) => {
-        if (props.color === 'green') {
-            return 'rgb(163, 255, 43)';
+        switch (props.color) {
+        case 'color1':
+            return '#5ac18e';
+        case 'color2':
+            return '#ffc0cb';
+        case 'color3':
+            return '#00dce0';
+        case 'color4':
+            return '#9886a7';
+        case 'color5':
+            return '#79bbb9';
+        default:
+            return '#fa8072';
         }
-        if (props.color === 'yellow') {
-            return 'rgb(202, 212, 13)';
-        }
-        return 'rgb(18, 222, 113)';
     }
 };
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 50%;
+    width: 30%;
     margin: auto;
 `,
     ColorButton = styled.input`
-    background-color:  ${(props) => {
-        if (props.color === 'green') {
-            return 'rgb(163, 255, 43)';
+    background-color: ${(props) => {
+        switch (props.color) {
+        case 'color1':
+            return '#5ac18e';
+        case 'color2':
+            return '#ffc0cb';
+        case 'color3':
+            return '#00dce0';
+        case 'color4':
+            return '#9886a7';
+        case 'color5':
+            return '#79bbb9';
+        default:
+            return '#fa8072';
         }
-        if (props.color === 'yellow') {
-            return 'rgb(202, 212, 13)';
-        }
-        return 'rgb(18, 222, 113)';
     }
 };
     cursor: pointer;
-    width: 100%; 
     height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: 0;
+
 `,
     ColorComponent = styled.form`
-    width: 15%;
     font: normal 12px sans-serif;
+    display: flex;
 `,
     ListComp = styled.form`
     font: normal 12px sans-serif;
-    width: 85%;
 `,
     ListTitle = styled.h1`
-    background-color: rgb(17, 105, 5);
+    background-color: #8f8585;
     margin: auto;
     padding: 10px;
     text-align: center;
     margin-bottom: 20px;
-    border: 2px rgb(161, 245, 51) solid;
-    color: rgb(161, 245, 51);
+    border: 0;
+    color: #5f6368;
 `,
     LittleTitle = styled(ListTitle)`
     width: 60%;
-    background-color:${(props) => {
-        if (props.color === 'green') {
-            return 'rgb(163, 255, 43)';
+    background-color: ${(props) => {
+        switch (props.color) {
+        case 'color1':
+            return '#5ac18e';
+        case 'color2':
+            return '#ffc0cb';
+        case 'color3':
+            return '#00dce0';
+        case 'color4':
+            return '#9886a7';
+        case 'color5':
+            return '#79bbb9';
+        default:
+            return '#fa8072';
         }
-        if (props.color === 'yellow') {
-            return 'rgb(202, 212, 13)';
-        }
-        return 'rgb(18, 222, 113)';
     }
 };
-    color:  rgb(17, 105, 5);
+    color:  #5f6368;
     margin-left: 20px;
     font-size: 15px;
     text-align: left;
@@ -82,7 +102,7 @@ export default class Layout extends Component {
         todos = lista.filter((todo) => todo.done === false);
         checkedTodos = lista.filter((todo) => todo.done === true);
         this.state = {checkedTodos,
-            'color': 'green',
+            'color': 'color6',
             todos};
     }
 
@@ -188,6 +208,15 @@ export default class Layout extends Component {
         this.setState({color});
     }
 
+    getColorButton = (color) => <ColorButton
+        color={color}
+        onClick={() => {
+            this.changeColor(color);
+        }}
+        type="button"
+    />
+
+
     render () {
         const {checkedTodos, color} = this.state,
             checked = checkedTodos.map((todo) => <Todo
@@ -235,30 +264,12 @@ export default class Layout extends Component {
                         {checked}
                     </ListComp>
                     <ColorComponent>
-                        <ColorButton
-                            color="green"
-                            onClick={() => {
-                                this.changeColor('green');
-                            }}
-                            type="button"
-                            value="Try it!"
-                        />
-                        <ColorButton
-                            color="blue"
-                            onClick={() => {
-                                this.changeColor('blue');
-                            }}
-                            type="button"
-                            value="Try it!"
-                        />
-                        <ColorButton
-                            color="yellow"
-                            onClick={() => {
-                                this.changeColor('yellow');
-                            }}
-                            type="button"
-                            value="Try it!"
-                        />
+                        {this.getColorButton('color1')}
+                        {this.getColorButton('color2')}
+                        {this.getColorButton('color3')}
+                        {this.getColorButton('color4')}
+                        {this.getColorButton('color5')}
+                        {this.getColorButton('color6')}
                     </ColorComponent>
                 </AllComp>
             </div>

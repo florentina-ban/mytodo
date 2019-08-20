@@ -7,13 +7,20 @@ const BtnText = styled.span`
         if (props.mouseOver) {
             return 'black';
         }
-        if (props.color === 'green') {
-            return 'rgb(163, 255, 43)';
+        switch (props.color) {
+        case 'color1':
+            return '#5ac18e';
+        case 'color2':
+            return '#ffc0cb';
+        case 'color3':
+            return '#00dce0';
+        case 'color4':
+            return '#9886a7';
+        case 'color5':
+            return '#79bbb9';
+        default:
+            return '#fa8072';
         }
-        if (props.color === 'yellow') {
-            return 'rgb(202, 212, 13)';
-        }
-        return 'rgb(18, 222, 113)';
     }
 };
     font-weight: 800;
@@ -24,13 +31,20 @@ const BtnText = styled.span`
 `,
     DeleteBtn = styled.span`
     background-color: ${(props) => {
-        if (props.color === 'green') {
-            return 'rgb(163, 255, 43)';
+        switch (props.color) {
+        case 'color1':
+            return '#5ac18e';
+        case 'color2':
+            return '#ffc0cb';
+        case 'color3':
+            return '#00dce0';
+        case 'color4':
+            return '#9886a7';
+        case 'color5':
+            return '#79bbb9';
+        default:
+            return '#fa8072';
         }
-        if (props.color === 'yellow') {
-            return 'rgb(202, 212, 13)';
-        }
-        return 'rgb(18, 222, 113)';
     }
 };
     border-radius: 40%;
