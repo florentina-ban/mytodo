@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import {getLista, getString} from './utils.js';
 import AddComponent from './Add';
 import MyTitle from './TitleComp.js';
 import Todo from './Todo.js';
-import lista from './constants.js';
+// Import lista from './constants.js';
 import styled from 'styled-components';
 
 const AllComp = styled.form`
@@ -49,7 +50,6 @@ const AllComp = styled.form`
     width: 20px;
     border-radius: 50%;
     border: 0;
-
 `,
     ColorComponent = styled.form`
     font: normal 12px sans-serif;
@@ -99,11 +99,25 @@ export default class Layout extends Component {
         super();
         let checkedTodos = [],
             todos = [];
-        todos = lista.filter((todo) => todo.done === false);
-        checkedTodos = lista.filter((todo) => todo.done === true);
+        const myStorage = window.localStorage,
+            // MyStorage.setItem('lista', getString(lista));
+            remakeLista = getLista(myStorage.getItem('lista'));
+        console.log(remakeLista);
+        todos = remakeLista.filter((todo) => todo.done === false);
+        checkedTodos = remakeLista.filter((todo) => todo.done === true);
         this.state = {checkedTodos,
             'color': 'color6',
             todos};
+    }
+
+    saveDataInStorage = () => {
+        const {checkedTodos, todos} = this.state,
+            listaChecked = getString(checkedTodos),
+            listaUnchecked = getString(todos),
+            listaZ = `${listaUnchecked};${listaChecked}`,
+            myStorage = window.localStorage;
+        myStorage.clear();
+        myStorage.setItem('lista', listaZ);
     }
 
     removeToDo = (id) => {
@@ -111,20 +125,28 @@ export default class Layout extends Component {
             {todos} = this.state;
         let [...newList] = todos.filter((todo) => todo.id !== id);
         if (newList.length < todos.length) {
-            this.setState({'todos': newList});
+            this.setState({'todos': newList}, () => {
+                this.saveDataInStorage();
+            });
         } else {
             newList = checkedTodos.filter((todo) => todo.id !== id);
-            this.setState({'checkedTodos': newList});
+            this.setState({'checkedTodos': newList}, () => {
+                this.saveDataInStorage();
+            });
         }
     }
 
     setChecked = (id) => {
         const {checkedTodos} = this.state,
             {todos} = this.state,
+            vnewList = todos.filter((todo) => todo.id !== id),
             [newTodo] = todos.filter((todo) => todo.id === id);
         newTodo.done = true;
         checkedTodos.push(newTodo);
-        this.setState({checkedTodos}, this.removeToDo(id));
+        this.setState({checkedTodos,
+            'todos': vnewList}, () => {
+            this.saveDataInStorage();
+        });
     }
 
     setUnChecked = (id) => {
@@ -135,13 +157,17 @@ export default class Layout extends Component {
         vnewTodo.done = false;
         todos.push(vnewTodo);
         this.setState({'checkedTodos': vnewcList,
-            todos});
+            todos}, () => {
+            this.saveDataInStorage();
+        });
     }
 
     addToDo = (stuffToDo) => {
         const {todos} = this.state;
         todos.push(stuffToDo);
-        this.setState({todos});
+        this.setState({todos}, () => {
+            this.saveDataInStorage();
+        });
     }
 
     modifyTextInArray = (par) => {
@@ -150,9 +176,14 @@ export default class Layout extends Component {
             if (par.myArray[counter].id === par.id) {
                 par.myArray[counter].text = par.newText;
                 if (par.identifier === 'todos') {
-                    this.setState({'todos': par.myArray});
+                    this.setState({'todos': par.myArray}, () => {
+                        this.saveDataInStorage();
+                    });
+                } else {
+                    this.setState({'checkedTodos': par.myArray}, () => {
+                        this.saveDataInStorage();
+                    });
                 }
-                this.setState({'checkedTodos': par.myArray});
                 return true;
             }
         }
@@ -171,7 +202,6 @@ export default class Layout extends Component {
                 'myArray': checkedTodos,
                 newText});
         }
-
     }
 
     getNumberOfChecked = (color) => {
@@ -183,7 +213,7 @@ export default class Layout extends Component {
                     <p>
                         {checkedTodos.length}
                         {' '}
-                        {'todos already done:'}
+                        {' todos already done:'}
                     </p>
                 </LittleTitle>
             );
