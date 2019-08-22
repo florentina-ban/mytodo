@@ -99,14 +99,14 @@ export default class Layout extends Component {
         super();
         let checkedTodos = [],
             todos = [];
-        const myStorage = window.localStorage,
-            // MyStorage.setItem('lista', getString(lista));
-            remakeLista = getLista(myStorage.getItem('lista'));
-        console.log(remakeLista);
+        const color = window.localStorage.getItem('color'),
+            // Window.localStorage.setItem('lista', getString(lista));
+            remakeLista = getLista(window.localStorage.getItem('lista'));
+        // Window.localStorage.setItem('color','color6');
         todos = remakeLista.filter((todo) => todo.done === false);
         checkedTodos = remakeLista.filter((todo) => todo.done === true);
         this.state = {checkedTodos,
-            'color': 'color6',
+            color,
             todos};
     }
 
@@ -116,7 +116,6 @@ export default class Layout extends Component {
             listaUnchecked = getString(todos),
             listaZ = `${listaUnchecked};${listaChecked}`,
             myStorage = window.localStorage;
-        myStorage.clear();
         myStorage.setItem('lista', listaZ);
     }
 
@@ -235,7 +234,9 @@ export default class Layout extends Component {
     }
 
     changeColor = (color) => {
-        this.setState({color});
+        this.setState({color}, () => {
+            window.localStorage.setItem('color', color);
+        });
     }
 
     getColorButton = (color) => <ColorButton

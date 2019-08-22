@@ -73,8 +73,11 @@ export default class MyTitle extends React.Component {
 
     constructor (props) {
         super(props);
+        const text = window.localStorage.getItem('title')
+            ? window.localStorage.getItem('title')
+            : props.text;
         this.state = {'clicked': false,
-            'text': props.text};
+            text};
         this.titleRef = React.createRef();
     }
 
@@ -114,7 +117,9 @@ export default class MyTitle extends React.Component {
         if (event.key === 'Enter') {
             const newTitle = this.titleRef.current.value.trim();
             if (newTitle.length) {
-                this.setState({'text': newTitle});
+                this.setState({'text': newTitle}, () => {
+                    window.localStorage.setItem('title', newTitle);
+                });
             }
             this.setState({'clicked': false});
         }
