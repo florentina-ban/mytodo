@@ -3,7 +3,7 @@ import {getLista, getString} from './utils.js';
 import AddComponent from './Add';
 import MyTitle from './TitleComp.js';
 import Todo from './Todo.js';
-// Import lista from './constants.js';
+//import lista from './constants.js';
 import styled from 'styled-components';
 
 const AllComp = styled.form`
@@ -59,7 +59,7 @@ const AllComp = styled.form`
     font: normal 12px sans-serif;
 `,
     ListTitle = styled.h1`
-    background-color: #8f8585;
+    background-color: #f1f3f4;
     margin: auto;
     padding: 10px;
     text-align: center;
@@ -99,10 +99,12 @@ export default class Layout extends Component {
         super();
         let checkedTodos = [],
             todos = [];
+        //window.localStorage.setItem('lista', getString(lista));
+
         const color = window.localStorage.getItem('color'),
-            // Window.localStorage.setItem('lista', getString(lista));
             remakeLista = getLista(window.localStorage.getItem('lista'));
         // Window.localStorage.setItem('color','color6');
+        
         todos = remakeLista.filter((todo) => todo.done === false);
         checkedTodos = remakeLista.filter((todo) => todo.done === true);
         this.state = {checkedTodos,

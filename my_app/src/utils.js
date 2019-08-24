@@ -17,7 +17,7 @@ const generateId = function generateId (todoList) {
     },
 
     getLista = function getLista (myString) {
-        const lista = myString.split(';'),
+        const lista = myString ? myString.split(';') : [],
             listaRemake = [];
         lista.forEach((element) => {
             const elements = element.split(','),
