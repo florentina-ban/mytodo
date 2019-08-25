@@ -63,18 +63,21 @@ export default class MyTitle extends React.Component {
 
     static propTypes = {
         'color': PropTypes.string,
+        'id': PropTypes.string,
         'text': PropTypes.string
     }
 
     static defaultProps = {
         'color': '',
+        'id':'',
         'text': 'enter title'
     }
 
     constructor (props) {
         super(props);
-        const text = window.localStorage.getItem('title')
-            ? window.localStorage.getItem('title')
+        const {id} = this.props, 
+            text = window.localStorage.getItem('title'+id) ? 
+            window.localStorage.getItem('title'+id)
             : props.text;
         this.state = {'clicked': false,
             text};
@@ -110,15 +113,15 @@ export default class MyTitle extends React.Component {
         if (!clicked) {
             this.setState({'clicked': !clicked});
         }
-
     }
 
     handleEnter = (event) => {
+        const {id} = this.props;
         if (event.key === 'Enter') {
             const newTitle = this.titleRef.current.value.trim();
             if (newTitle.length) {
                 this.setState({'text': newTitle}, () => {
-                    window.localStorage.setItem('title', newTitle);
+                    window.localStorage.setItem('title'+id, newTitle);
                 });
             }
             this.setState({'clicked': false});

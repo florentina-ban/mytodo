@@ -16,6 +16,42 @@ const generateId = function generateId (todoList) {
         return id;
     },
 
+    generateLayoutId = function generateLayoutId (idList) {
+        const increm = 1,
+            someNumber = 100;
+        let found = false,
+            id = '';
+        while (!found) {
+            found = true;
+            const myNumber = parseInt(Math.random() * someNumber, 10);
+            id = myNumber.toString();
+            for (let iter = 0; iter < idList.length; iter += increm) {
+                if (idList[iter] === id) {
+                    found = false;
+                }
+            }
+        }
+        return id;
+    },
+
+    getLayoutIds = function getLayoutIds (myString) {
+        const lista = myString ? myString.split(',') : ['1'];
+        return lista;
+    },
+
+    getLayoutString = function getLayoutString (layoutIds){
+        let myString='';
+        layoutIds.forEach(id => {
+            if(myString){
+                myString = myString +','+ id;
+        }
+        else {
+            myString = myString + id;
+        }
+        });
+        return myString;
+    },
+
     getLista = function getLista (myString) {
         const lista = myString ? myString.split(';') : [],
             listaRemake = [];
@@ -43,5 +79,8 @@ const generateId = function generateId (todoList) {
 
 export default generateId;
 export {getString};
+export {getLayoutIds};
 export {getLista};
+export {getLayoutString};
+export {generateLayoutId};
 

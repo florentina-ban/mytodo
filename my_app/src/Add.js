@@ -114,7 +114,8 @@ export default class AddComponent extends React.Component {
         if (todoText.length === zero) {
             this.setState({'emptyErr': 'fill the gap and then press Enter'});
         } else {
-            document.getElementById('todo_id').value = '';
+            this.myRef.current.value='';
+            //document.getElementById('todo_id').value = '';
             const idG = generateId(allToDos),
                 stuff = {
                     'done': false,
@@ -135,7 +136,6 @@ export default class AddComponent extends React.Component {
             >
                 <BtnAdd
                     color={color}
-                    id="todo_id"
                     onChange={() => {
                         this.setState({'emptyErr': ''});
                     }}
@@ -144,7 +144,6 @@ export default class AddComponent extends React.Component {
                 />
                 <BtnAddButton
                     color={color}
-                    id="add_button_id"
                     onClick={this.handleAddToDoCb}
                     type="button"
                     value="+"

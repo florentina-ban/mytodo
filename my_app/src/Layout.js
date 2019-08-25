@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {getLista, getString} from './utils.js';
 import AddComponent from './Add';
 import MyTitle from './TitleComp.js';
+import PropTypes from 'prop-types';
 import Todo from './Todo.js';
-//import lista from './constants.js';
 import styled from 'styled-components';
 
 const AllComp = styled.form`
@@ -24,8 +24,7 @@ const AllComp = styled.form`
         }
     }
 };
-    width: 30%;
-    margin: auto;
+    width: 300px;
 `,
     ColorButton = styled.input`
     background-color: ${(props) => {
@@ -52,8 +51,17 @@ const AllComp = styled.form`
     border: 0;
 `,
     ColorComponent = styled.form`
-    font: normal 12px sans-serif;
     display: flex;
+`,
+    HeaderComponent = styled.form`
+    display: flex;
+    justify-content: space-between;
+`,
+    LayoutButtonAdd = styled(ColorButton)`
+    margin: 10px;
+    margin-left: 20px;
+    font-weight: bold;
+
 `,
     ListComp = styled.form`
     font: normal 12px sans-serif;
@@ -95,16 +103,24 @@ const AllComp = styled.form`
     padding: 0;
 `;
 export default class Layout extends Component {
-    constructor () {
-        super();
+    static propTypes = {
+        'addLayoutFunction': PropTypes.func,
+        'deleteLayoutFunction': PropTypes.func,
+        'id': PropTypes.string
+    }
+
+    static defaultProps = {
+        'addLayoutFunction': () => {},
+        'deleteLayoutFunction': () => {},
+        'id': ''
+    }
+
+    constructor (props) {
+        super(props);
         let checkedTodos = [],
             todos = [];
-        //window.localStorage.setItem('lista', getString(lista));
-
-        const color = window.localStorage.getItem('color'),
-            remakeLista = getLista(window.localStorage.getItem('lista'));
-        // Window.localStorage.setItem('color','color6');
-        
+        const color = window.localStorage.getItem('color'+this.props.id),
+            remakeLista = getLista(window.localStorage.getItem('lista'+this.props.id));
         todos = remakeLista.filter((todo) => todo.done === false);
         checkedTodos = remakeLista.filter((todo) => todo.done === true);
         this.state = {checkedTodos,
@@ -115,10 +131,23 @@ export default class Layout extends Component {
     saveDataInStorage = () => {
         const {checkedTodos, todos} = this.state,
             listaChecked = getString(checkedTodos),
-            listaUnchecked = getString(todos),
-            listaZ = `${listaUnchecked};${listaChecked}`,
-            myStorage = window.localStorage;
-        myStorage.setItem('lista', listaZ);
+            listaUnchecked = getString(todos);
+        let listaZ;
+            if (listaUnchecked.length && listaChecked.length){
+                listaZ = `${listaUnchecked};${listaChecked}`;
+                window.localStorage.setItem('lista'+this.props.id, listaZ);
+                return;
+            }
+            if (listaUnchecked.length){
+                window.localStorage.setItem('lista'+this.props.id, listaUnchecked);
+                return;
+            }
+            if (listaChecked.length){
+                window.localStorage.setItem('lista'+this.props.id, listaChecked);
+                return;
+            }
+            window.localStorage.setItem('lista'+this.props.id, []);
+            
     }
 
     removeToDo = (id) => {
@@ -237,7 +266,7 @@ export default class Layout extends Component {
 
     changeColor = (color) => {
         this.setState({color}, () => {
-            window.localStorage.setItem('color', color);
+            window.localStorage.setItem('color'+this.props.id, color);
         });
     }
 
@@ -249,6 +278,10 @@ export default class Layout extends Component {
         type="button"
     />
 
+    addLayout = () =>{
+        const {addLayoutFunction} = this.props;
+        addLayoutFunction();
+    }
 
     render () {
         const {checkedTodos, color} = this.state,
@@ -263,6 +296,7 @@ export default class Layout extends Component {
                 setChecked={this.setUnChecked}
                 text={todo.text}
             />),
+            {id, deleteLayoutFunction} = this.props,
             {todos} = this.state,
             todosMod = todos.map((todo) => <Todo
                 ck={false}
@@ -278,13 +312,18 @@ export default class Layout extends Component {
             />);
         return (
             <div>
-                <ListTitle>
-                    {'My ToDo lists'}
-                </ListTitle>
                 <AllComp color={color}>
+                    <HeaderComponent>
+                        <LayoutButtonAdd color={color} value={'+'} onClick={() => {this.addLayout()}}/>
+                        <LayoutButtonAdd 
+                            color={color} 
+                            value={'X'} 
+                            onClick={() => {deleteLayoutFunction(id)} }/>
+                    </HeaderComponent>
                     <ListComp color={color}>
                         <MyTitle
                             color={color}
+                            id={id}
                         />
                         {todosMod}
                         <AddComponent
