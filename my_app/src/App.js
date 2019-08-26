@@ -1,13 +1,13 @@
-import Layout from "./Layout.js";
-import React from "react";
+import {generateLayoutId, getLayoutIds, getLayoutString} from './utils.js';
+import Layout from './Layout.js';
+import React from 'react';
 import styled from 'styled-components';
-import { generateLayoutId, getLayoutIds, getLayoutString } from "./utils.js";
 
 const AllLayouts = styled.form`
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
-`,    
+`,
     ListTitle = styled.h1`
     background-color: #f1f3f4;
     margin: auto;
@@ -19,49 +19,54 @@ const AllLayouts = styled.form`
 `;
 
 class App extends React.Component {
-    constructor(){
+    constructor () {
         super();
-        //window.localStorage.clear();
+        // Window.localStorage.clear();
         let layoutIds = window.localStorage.getItem('layoutIds');
         layoutIds = getLayoutIds(layoutIds);
-        this.state = ({'layoutIds':layoutIds});
+        this.state = {layoutIds};
     }
 
     addOneLayout = () => {
-        let {layoutIds} = this.state;
-        const id = generateLayoutId(layoutIds);
-        layoutIds.push(id);   
-        debugger;
-        console.log(getLayoutString(layoutIds));
-        this.setState({layoutIds},()=>{window.localStorage.setItem('layoutIds',getLayoutString(layoutIds))});
+        const {layoutIds} = this.state,
+            id = generateLayoutId(layoutIds),
+            store = window.localStorage;
+        layoutIds.push(id);
+        this.setState({layoutIds}, () => {
+            store.setItem('layoutIds', getLayoutString(layoutIds));
+        });
     }
 
-    getOneLayout = (id) => {
-        return (
-            <Layout id={id} addLayoutFunction={this.addOneLayout} deleteLayoutFunction={this.deleteLayout}/>
-        );
-    } 
+    getOneLayout = (id) => <Layout
+        addLayoutFunction={this.addOneLayout}
+        deleteLayoutFunction={this.deleteLayout}
+        id={id}
+    />
+
 
     getAllLayouts = () => {
-        const {layoutIds} = this.state;
-        let allLayouts = [];
-        layoutIds.forEach(element => {
+        const {layoutIds} = this.state,
+            allLayouts = [];
+        layoutIds.forEach((element) => {
             allLayouts.push(this.getOneLayout(element));
         });
         return allLayouts;
     }
 
     deleteLayout = (myId) => {
-        let {layoutIds} = this.state;
-        const newLayoutIds = layoutIds.filter((id) => id!==myId),
+        const {layoutIds} = this.state,
+            newLayoutIds = layoutIds.filter((id) => id !== myId),
             stringLayoutsIds = getLayoutString(newLayoutIds);
-        window.localStorage.removeItem('lista'+myId);
-        window.localStorage.removeItem('title'+myId);
-        window.localStorage.removeItem('color'+myId);
-        this.setState({'layoutIds': newLayoutIds},()=>{window.localStorage.setItem('layoutIds',stringLayoutsIds)});
+        window.localStorage.removeItem(`lista${myId}`);
+        window.localStorage.removeItem(`title${myId}`);
+        window.localStorage.removeItem(`color${myId}`);
+        this.setState({'layoutIds': newLayoutIds}, () => {
+            window.localStorage.setItem('layoutIds', stringLayoutsIds);
+            document.location.reload(true);
+        });
     }
 
-    render(){
+    render () {
         return (
             <div>
                 <ListTitle>
@@ -71,7 +76,7 @@ class App extends React.Component {
                     {this.getAllLayouts()}
                 </AllLayouts>
             </div>
-        );   
+        );
     }
 }
 

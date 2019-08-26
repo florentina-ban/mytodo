@@ -110,8 +110,8 @@ export default class Layout extends Component {
     }
 
     static defaultProps = {
-        'addLayoutFunction': () => {},
-        'deleteLayoutFunction': () => {},
+        'addLayoutFunction': () => null,
+        'deleteLayoutFunction': () => null,
         'id': ''
     }
 
@@ -119,8 +119,9 @@ export default class Layout extends Component {
         super(props);
         let checkedTodos = [],
             todos = [];
-        const color = window.localStorage.getItem('color'+this.props.id),
-            remakeLista = getLista(window.localStorage.getItem('lista'+this.props.id));
+        const {id} = this.props,
+            color = window.localStorage.getItem(`color${id}`),
+            remakeLista = getLista(window.localStorage.getItem(`lista${id}`));
         todos = remakeLista.filter((todo) => todo.done === false);
         checkedTodos = remakeLista.filter((todo) => todo.done === true);
         this.state = {checkedTodos,
@@ -130,24 +131,22 @@ export default class Layout extends Component {
 
     saveDataInStorage = () => {
         const {checkedTodos, todos} = this.state,
-            listaChecked = getString(checkedTodos),
-            listaUnchecked = getString(todos);
-        let listaZ;
-            if (listaUnchecked.length && listaChecked.length){
-                listaZ = `${listaUnchecked};${listaChecked}`;
-                window.localStorage.setItem('lista'+this.props.id, listaZ);
-                return;
-            }
-            if (listaUnchecked.length){
-                window.localStorage.setItem('lista'+this.props.id, listaUnchecked);
-                return;
-            }
-            if (listaChecked.length){
-                window.localStorage.setItem('lista'+this.props.id, listaChecked);
-                return;
-            }
-            window.localStorage.setItem('lista'+this.props.id, []);
-            
+            {id} = this.props,
+            listaCheck = getString(checkedTodos),
+            listaUncheck = getString(todos),
+            myStorage = window.localStorage;
+        if (listaUncheck.length && listaCheck.length) {
+            myStorage.setItem(`lista${id}`, `${listaUncheck};${listaCheck}`);
+        } else
+        if (listaUncheck.length) {
+            window.localStorage.setItem(`lista${id}`, listaUncheck);
+        } else
+        if (listaCheck.length) {
+            window.localStorage.setItem(`lista${id}`, listaCheck);
+        } else {
+            window.localStorage.setItem(`lista${id}`, []);
+        }
+
     }
 
     removeToDo = (id) => {
@@ -265,8 +264,9 @@ export default class Layout extends Component {
     }
 
     changeColor = (color) => {
+        const {id} = this.props;
         this.setState({color}, () => {
-            window.localStorage.setItem('color'+this.props.id, color);
+            window.localStorage.setItem(`color${id}`, color);
         });
     }
 
@@ -278,7 +278,7 @@ export default class Layout extends Component {
         type="button"
     />
 
-    addLayout = () =>{
+    addLayout = () => {
         const {addLayoutFunction} = this.props;
         addLayoutFunction();
     }
@@ -314,11 +314,23 @@ export default class Layout extends Component {
             <div>
                 <AllComp color={color}>
                     <HeaderComponent>
-                        <LayoutButtonAdd color={color} value={'+'} onClick={() => {this.addLayout()}}/>
-                        <LayoutButtonAdd 
-                            color={color} 
-                            value={'X'} 
-                            onClick={() => {deleteLayoutFunction(id)} }/>
+                        <LayoutButtonAdd
+                            color={color}
+                            onClick={() => {
+                                this.addLayout();
+                            }}
+                            value="+"
+                        />
+                        <span>
+                            {id}
+                        </span>
+                        <LayoutButtonAdd
+                            color={color}
+                            onClick={() => {
+                                deleteLayoutFunction(id);
+                            }}
+                            value="X"
+                        />
                     </HeaderComponent>
                     <ListComp color={color}>
                         <MyTitle
