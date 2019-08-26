@@ -32,7 +32,7 @@ const ListTitle = styled.h1`
 };
     color:  #5f6368;
     margin-left: 20px;
-    font-size: 15px;
+    font-size: 18px;
     text-align: left;
     border: 0px;
     margin-bottom: 0;
@@ -57,6 +57,9 @@ const ListTitle = styled.h1`
 };
     border : 0;
     width: 100px;
+    ::placeholder,
+    ::-webkit-input-placeholder {
+    color: #590303;
 `;
 
 export default class MyTitle extends React.Component {
@@ -69,16 +72,16 @@ export default class MyTitle extends React.Component {
 
     static defaultProps = {
         'color': '',
-        'id':'',
+        'id': '',
         'text': 'enter title'
     }
 
     constructor (props) {
         super(props);
-        const {id} = this.props, 
-            text = window.localStorage.getItem('title'+id) ? 
-            window.localStorage.getItem('title'+id)
-            : props.text;
+        const {id} = this.props,
+            text = window.localStorage.getItem(`title${id}`)
+                ? window.localStorage.getItem(`title${id}`)
+                : props.text;
         this.state = {'clicked': false,
             text};
         this.titleRef = React.createRef();
@@ -121,7 +124,7 @@ export default class MyTitle extends React.Component {
             const newTitle = this.titleRef.current.value.trim();
             if (newTitle.length) {
                 this.setState({'text': newTitle}, () => {
-                    window.localStorage.setItem('title'+id, newTitle);
+                    window.localStorage.setItem(`title${id}`, newTitle);
                 });
             }
             this.setState({'clicked': false});

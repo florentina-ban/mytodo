@@ -49,6 +49,7 @@ const AddComp = styled.span`
     margin:2px;
     border: 0;
     border-bottom: 1px grey solid;
+    width: 85%;
 `,
     BtnAddButton = styled.input`
     background-color: ${(props) => {
@@ -70,6 +71,10 @@ const AddComp = styled.span`
 };
     cursor: pointer;
     border: 0;
+    height: 30px;
+    width: 30px;
+    font-size: 15px;
+    font-weight: bold;
 `;
 
 export default class AddComponent extends React.Component {
@@ -114,8 +119,7 @@ export default class AddComponent extends React.Component {
         if (todoText.length === zero) {
             this.setState({'emptyErr': 'fill the gap and then press Enter'});
         } else {
-            this.myRef.current.value='';
-            //document.getElementById('todo_id').value = '';
+            this.myRef.current.value = '';
             const idG = generateId(allToDos),
                 stuff = {
                     'done': false,

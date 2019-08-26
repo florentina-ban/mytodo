@@ -25,6 +25,11 @@ const AllComp = styled.form`
     }
 };
     width: 300px;
+    min-height: 300px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: space-between;
 `,
     ColorButton = styled.input`
     background-color: ${(props) => {
@@ -48,7 +53,14 @@ const AllComp = styled.form`
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    border: 0;
+    margin-left: 10px;
+    border: ${(props) => {
+        if (props.color === props.backgroundColor) {
+            return '1px black solid';
+        }
+        return 'none';
+    }
+};
 `,
     ColorComponent = styled.form`
     display: flex;
@@ -56,11 +68,13 @@ const AllComp = styled.form`
     HeaderComponent = styled.form`
     display: flex;
     justify-content: space-between;
+    width: 298px;
 `,
     LayoutButtonAdd = styled(ColorButton)`
     margin: 10px;
     margin-left: 20px;
     font-weight: bold;
+    border: none;
 
 `,
     ListComp = styled.form`
@@ -270,7 +284,8 @@ export default class Layout extends Component {
         });
     }
 
-    getColorButton = (color) => <ColorButton
+    getColorButton = (color, backgroundColor) => <ColorButton
+        backgroundColor={backgroundColor}
         color={color}
         onClick={() => {
             this.changeColor(color);
@@ -313,47 +328,46 @@ export default class Layout extends Component {
         return (
             <div>
                 <AllComp color={color}>
-                    <HeaderComponent>
-                        <LayoutButtonAdd
-                            color={color}
-                            onClick={() => {
-                                this.addLayout();
-                            }}
-                            value="+"
-                        />
-                        <span>
-                            {id}
-                        </span>
-                        <LayoutButtonAdd
-                            color={color}
-                            onClick={() => {
-                                deleteLayoutFunction(id);
-                            }}
-                            value="X"
-                        />
-                    </HeaderComponent>
-                    <ListComp color={color}>
-                        <MyTitle
-                            color={color}
-                            id={id}
-                        />
-                        {todosMod}
-                        <AddComponent
-                            addToDo={this.addToDo}
-                            allToDos={checkedTodos}
-                            color={color}
-                            id="add_id"
-                        />
-                        {this.getNumberOfChecked(color)}
-                        {checked}
-                    </ListComp>
+                    <form>
+                        <HeaderComponent>
+                            <LayoutButtonAdd
+                                color={color}
+                                onClick={() => {
+                                    this.addLayout();
+                                }}
+                                value="+"
+                            />
+                            <LayoutButtonAdd
+                                color={color}
+                                onClick={() => {
+                                    deleteLayoutFunction(id);
+                                }}
+                                value="X"
+                            />
+                        </HeaderComponent>
+                        <ListComp color={color}>
+                            <MyTitle
+                                color={color}
+                                id={id}
+                            />
+                            {todosMod}
+                            <AddComponent
+                                addToDo={this.addToDo}
+                                allToDos={checkedTodos}
+                                color={color}
+                                id="add_id"
+                            />
+                            {this.getNumberOfChecked(color)}
+                            {checked}
+                        </ListComp>
+                    </form>
                     <ColorComponent>
-                        {this.getColorButton('color1')}
-                        {this.getColorButton('color2')}
-                        {this.getColorButton('color3')}
-                        {this.getColorButton('color4')}
-                        {this.getColorButton('color5')}
-                        {this.getColorButton('color6')}
+                        {this.getColorButton('color1', color)}
+                        {this.getColorButton('color2', color)}
+                        {this.getColorButton('color3', color)}
+                        {this.getColorButton('color4', color)}
+                        {this.getColorButton('color5', color)}
+                        {this.getColorButton('color6', color)}
                     </ColorComponent>
                 </AllComp>
             </div>

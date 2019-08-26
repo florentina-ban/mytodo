@@ -7,6 +7,7 @@ const AllLayouts = styled.form`
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    min-height: 600px;
 `,
     ListTitle = styled.h1`
     background-color: #f1f3f4;

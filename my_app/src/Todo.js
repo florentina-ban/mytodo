@@ -5,11 +5,14 @@ import styled from 'styled-components';
 
 const CheckBox = styled.input`
     cursor: pointer;
-    
+    border: none;
+    width: 20px;
+    height: 20px;    
 `,
     ListStyle = styled.li`
     list-style:none;
     margin:5px;
+    text-align: center;
 `,
     MyInput = styled.input`
     background-color: ${(props) => {
@@ -30,7 +33,11 @@ const CheckBox = styled.input`
     }
 };
     border : 0;
-    width: 100px;
+    outline: none;
+    ::placeholder,
+    ::-webkit-input-placeholder {
+    color: #590303;
+    }
 `,
     MyTodoItem = styled.span`
     padding: 3px;
@@ -61,11 +68,13 @@ const CheckBox = styled.input`
     }
 };
     display: inline-block;
-    width: 70%;
+    width: 80%;
+    font-size: 15px;
+    
 `,
     WrapTag = styled.span`
     display: inline-block;
-    width: 70%;
+    width: 80%;
 `;
 
 export default class Todo extends React.Component {
