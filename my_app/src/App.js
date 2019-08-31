@@ -1,13 +1,14 @@
 import {generateLayoutId, getLayoutIds, getLayoutString} from './utils.js';
+import AddLayoutComp from './AddLayoutComp';
 import Layout from './Layout.js';
 import React from 'react';
+import generateId from './utils';
 import styled from 'styled-components';
 
 const AllLayouts = styled.form`
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    min-height: 600px;
 `,
     ListTitle = styled.h1`
     background-color: #f1f3f4;
@@ -28,7 +29,7 @@ class App extends React.Component {
         this.state = {layoutIds};
     }
 
-    addOneLayout = () => {
+    addOneLayout = (text) => {
         const {layoutIds} = this.state,
             id = generateLayoutId(layoutIds),
             store = window.localStorage;
@@ -36,13 +37,27 @@ class App extends React.Component {
         this.setState({layoutIds}, () => {
             store.setItem('layoutIds', getLayoutString(layoutIds));
         });
+        if (typeof text !== 'undefined') {
+            if (text.length) {
+                const todoId = generateId([]);
+                store.setItem(`lista${id}`, `${todoId},${text},false`);
+            }
+        }
     }
 
-    getOneLayout = (id) => <Layout
-        addLayoutFunction={this.addOneLayout}
-        deleteLayoutFunction={this.deleteLayout}
-        id={id}
-    />
+    getOneLayout = (id) => {
+        const aStore = window.localStorage,
+            color = aStore.getItem(`color${id}`) === null
+                ? 'color6'
+                : aStore.getItem(`color${id}`);
+        return (
+            <Layout
+                addLayoutFunction={this.addOneLayout}
+                color={color}
+                deleteLayoutFunction={this.deleteLayout}
+                id={id}
+            />);
+    }
 
 
     getAllLayouts = () => {
@@ -71,8 +86,9 @@ class App extends React.Component {
         return (
             <div>
                 <ListTitle>
-                    {'My ToDo lists'}
+                    {'My ToDo Lists'}
                 </ListTitle>
+                <AddLayoutComp addLayoutFunction={this.addOneLayout} />
                 <AllLayouts>
                     {this.getAllLayouts()}
                 </AllLayouts>

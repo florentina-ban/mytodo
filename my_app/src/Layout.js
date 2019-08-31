@@ -75,7 +75,6 @@ const AllComp = styled.form`
     margin-left: 20px;
     font-weight: bold;
     border: none;
-
 `,
     ListComp = styled.form`
     font: normal 12px sans-serif;
@@ -134,7 +133,10 @@ export default class Layout extends Component {
         let checkedTodos = [],
             todos = [];
         const {id} = this.props,
-            color = window.localStorage.getItem(`color${id}`),
+            aStore = window.localStorage,
+            color = typeof aStore.getItem(`color${id}`) === 'undefined'
+                ? 'color6'
+                : aStore.getItem(`color${id}`),
             remakeLista = getLista(window.localStorage.getItem(`lista${id}`));
         todos = remakeLista.filter((todo) => todo.done === false);
         checkedTodos = remakeLista.filter((todo) => todo.done === true);
@@ -299,7 +301,11 @@ export default class Layout extends Component {
     }
 
     render () {
-        const {checkedTodos, color} = this.state,
+        let {color} = this.state;
+        if (color === null) {
+            color = 'color6';
+        }
+        const {checkedTodos} = this.state,
             checked = checkedTodos.map((todo) => <Todo
                 color={color}
                 done={todo.done}

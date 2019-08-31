@@ -35,25 +35,28 @@ const generateId = function generateId (todoList) {
     },
 
     getLayoutIds = function getLayoutIds (myString) {
-        const lista = myString ? myString.split(',') : ['1'];
+        const lista = myString
+            ? myString.split(',')
+            : ['1'];
         return lista;
     },
 
-    getLayoutString = function getLayoutString (layoutIds){
-        let myString='';
-        layoutIds.forEach(id => {
-            if(myString){
-                myString = myString +','+ id;
-        }
-        else {
-            myString = myString + id;
-        }
+    getLayoutString = function getLayoutString (layoutIds) {
+        let myString = '';
+        layoutIds.forEach((id) => {
+            if (myString) {
+                myString = `${myString},${id}`;
+            } else {
+                myString += id;
+            }
         });
         return myString;
     },
 
     getLista = function getLista (myString) {
-        const lista = myString ? myString.split(';') : [],
+        const lista = myString
+                ? myString.split(';')
+                : [],
             listaRemake = [];
         lista.forEach((element) => {
             const elements = element.split(','),

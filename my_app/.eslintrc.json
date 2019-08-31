@@ -28,6 +28,7 @@
       "no-invalid-this": "off",
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "no-ternary": "off",
-      "react/jsx-closing-bracket-location": "off"
+      "react/jsx-closing-bracket-location": "off",
+      "no-magic-numbers": "off"
     }
   }
