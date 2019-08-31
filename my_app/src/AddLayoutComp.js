@@ -52,11 +52,11 @@ export default class AddLayoutComp extends React.Component {
                 ? <MyInput
                     onBlur={this.handleClick}
                     onKeyPress={this.handleEnter}
-                    placeholder="Add new note.."
+                    placeholder="Add a new note.."
                     ref={this.inputRef}
                     type="text" />
                 : <span onClick={this.handleClick}>
-                    {'Add new note...'}
+                    {'Add a new note...'}
                 </span >;
         return (
             htmlComp

@@ -1,120 +1,12 @@
+import {AllComp, ColorButton, ColorComp, HeaderComp} from './LayoutStyle';
+import {LayoutAddBtn, ListComp, LittleTitle} from './LayoutStyle';
 import React, {Component} from 'react';
 import {getLista, getString} from './utils.js';
 import AddComponent from './Add';
 import MyTitle from './TitleComp.js';
 import PropTypes from 'prop-types';
 import Todo from './Todo.js';
-import styled from 'styled-components';
 
-const AllComp = styled.form`
-    background-color: ${(props) => {
-        switch (props.color) {
-        case 'color1':
-            return '#5ac18e';
-        case 'color2':
-            return '#ffc0cb';
-        case 'color3':
-            return '#00dce0';
-        case 'color4':
-            return '#9886a7';
-        case 'color5':
-            return '#79bbb9';
-        default:
-            return '#fa8072';
-        }
-    }
-};
-    width: 300px;
-    min-height: 300px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-content: space-between;
-`,
-    ColorButton = styled.input`
-    background-color: ${(props) => {
-        switch (props.color) {
-        case 'color1':
-            return '#5ac18e';
-        case 'color2':
-            return '#ffc0cb';
-        case 'color3':
-            return '#00dce0';
-        case 'color4':
-            return '#9886a7';
-        case 'color5':
-            return '#79bbb9';
-        default:
-            return '#fa8072';
-        }
-    }
-};
-    cursor: pointer;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    margin-left: 10px;
-    border: ${(props) => {
-        if (props.color === props.backgroundColor) {
-            return '1px black solid';
-        }
-        return 'none';
-    }
-};
-`,
-    ColorComponent = styled.form`
-    display: flex;
-`,
-    HeaderComponent = styled.form`
-    display: flex;
-    justify-content: space-between;
-    width: 298px;
-`,
-    LayoutButtonAdd = styled(ColorButton)`
-    margin: 10px;
-    margin-left: 20px;
-    font-weight: bold;
-    border: none;
-`,
-    ListComp = styled.form`
-    font: normal 12px sans-serif;
-`,
-    ListTitle = styled.h1`
-    background-color: #f1f3f4;
-    margin: auto;
-    padding: 10px;
-    text-align: center;
-    margin-bottom: 20px;
-    border: 0;
-    color: #5f6368;
-`,
-    LittleTitle = styled(ListTitle)`
-    width: 60%;
-    background-color: ${(props) => {
-        switch (props.color) {
-        case 'color1':
-            return '#5ac18e';
-        case 'color2':
-            return '#ffc0cb';
-        case 'color3':
-            return '#00dce0';
-        case 'color4':
-            return '#9886a7';
-        case 'color5':
-            return '#79bbb9';
-        default:
-            return '#fa8072';
-        }
-    }
-};
-    color:  #5f6368;
-    margin-left: 20px;
-    font-size: 15px;
-    text-align: left;
-    border: 0px;
-    margin-bottom: 0;
-    padding: 0;
-`;
 export default class Layout extends Component {
     static propTypes = {
         'addLayoutFunction': PropTypes.func,
@@ -250,9 +142,8 @@ export default class Layout extends Component {
     }
 
     getNumberOfChecked = (color) => {
-        const {checkedTodos} = this.state,
-            one = 1;
-        if (checkedTodos.length > one) {
+        const {checkedTodos} = this.state;
+        if (checkedTodos.length > 1) {
             return (
                 <LittleTitle color={color}>
                     <p>
@@ -307,8 +198,8 @@ export default class Layout extends Component {
         }
         const {checkedTodos} = this.state,
             checked = checkedTodos.map((todo) => <Todo
+                ck
                 color={color}
-                done={todo.done}
                 id={todo.id}
                 key={`todo_${todo.id}`}
                 modifyText={this.modifyText}
@@ -322,7 +213,6 @@ export default class Layout extends Component {
             todosMod = todos.map((todo) => <Todo
                 ck={false}
                 color={color}
-                done={todo.done}
                 id={todo.id}
                 key={`todo_${todo.id}`}
                 modifyText={this.modifyText}
@@ -335,22 +225,22 @@ export default class Layout extends Component {
             <div>
                 <AllComp color={color}>
                     <form>
-                        <HeaderComponent>
-                            <LayoutButtonAdd
+                        <HeaderComp>
+                            <LayoutAddBtn
                                 color={color}
                                 onClick={() => {
                                     this.addLayout();
                                 }}
                                 value="+"
                             />
-                            <LayoutButtonAdd
+                            <LayoutAddBtn
                                 color={color}
                                 onClick={() => {
                                     deleteLayoutFunction(id);
                                 }}
                                 value="X"
                             />
-                        </HeaderComponent>
+                        </HeaderComp>
                         <ListComp color={color}>
                             <MyTitle
                                 color={color}
@@ -367,14 +257,14 @@ export default class Layout extends Component {
                             {checked}
                         </ListComp>
                     </form>
-                    <ColorComponent>
+                    <ColorComp>
                         {this.getColorButton('color1', color)}
                         {this.getColorButton('color2', color)}
                         {this.getColorButton('color3', color)}
                         {this.getColorButton('color4', color)}
                         {this.getColorButton('color5', color)}
                         {this.getColorButton('color6', color)}
-                    </ColorComponent>
+                    </ColorComp>
                 </AllComp>
             </div>
         );

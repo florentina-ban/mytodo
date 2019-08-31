@@ -57,9 +57,11 @@ const ListTitle = styled.h1`
 };
     border : 0;
     width: 100px;
+    outline: none;
     ::placeholder,
     ::-webkit-input-placeholder {
     color: #590303;
+    }
 `;
 
 export default class MyTitle extends React.Component {
@@ -95,8 +97,7 @@ export default class MyTitle extends React.Component {
                 <MyInput
                     color={color}
                     onBlur={() => {
-                        const event = {'key': 'Enter'};
-                        this.handleEnter(event);
+                        this.handleEnter({'key': 'Enter'});
                     }}
                     onKeyPress={this.handleEnter}
                     placeholder={text}

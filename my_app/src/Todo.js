@@ -61,7 +61,7 @@ const CheckBox = styled.input`
     }
 };
     text-decoration: ${(props) => {
-        if (props.cheked === 'nck') {
+        if (!props.cheked) {
             return 'none';
         }
         return 'line-through';
@@ -102,27 +102,17 @@ export default class Todo extends React.Component {
     constructor (props) {
         super(props);
         const {ck, text} = props;
-        this.state = {'className': this.getChecked(ck),
-            'isChecked': Boolean(ck),
+        this.state = {'isChecked': ck,
             'isClicked': false,
             'mouseOver': false,
             text};
         this.inputRef = React.createRef();
     }
 
-    getChecked = (ck) => {
-        if (ck) {
-            return 'ck';
-        }
-        return 'nck';
-    }
-
-    handleChangeClassName = () => {
+    handleIsChecked = () => {
         const {isChecked} = this.state,
-            {id, setChecked} = this.props,
-            className = this.getChecked(isChecked);
-        this.setState({className,
-            'isChecked': !isChecked}, () => {
+            {id, setChecked} = this.props;
+        this.setState({'isChecked': !isChecked}, () => {
             setChecked(id);
         });
     }
@@ -140,7 +130,7 @@ export default class Todo extends React.Component {
 
     getHtmlTag = (text) => {
         const {id, color} = this.props,
-            {isClicked, className} = this.state;
+            {isClicked, isChecked} = this.state;
         if (isClicked) {
             return (
                 <MyInput
@@ -158,7 +148,7 @@ export default class Todo extends React.Component {
         }
         return (
             <MyTodoItem
-                cheked={className}
+                cheked={isChecked}
                 color={color}
             >
                 <span onClick={this.handleOnClick}>
@@ -196,7 +186,7 @@ export default class Todo extends React.Component {
             <ListStyle>
                 <CheckBox
                     id={id}
-                    onChange={this.handleChangeClassName}
+                    onChange={this.handleIsChecked}
                     type="checkbox"
                 />
                 <WrapTag

@@ -29,6 +29,7 @@
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "no-ternary": "off",
       "react/jsx-closing-bracket-location": "off",
-      "no-magic-numbers": "off"
+      "no-magic-numbers": "off",
+      "no-duplicate-imports": "off"
     }
   }
