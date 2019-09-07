@@ -24,6 +24,7 @@ const AllComp = styled.form`
     justify-content: space-between;
     flex-wrap: wrap;
     align-content: space-between;
+    margin: 5px;
 `,
     ColorButton = styled.input`
     background-color: ${(props) => {
@@ -58,10 +59,11 @@ const AllComp = styled.form`
 `,
     ColorComp = styled.form`
     display: flex;
+    margin-bottom: 5px;
 `,
     HeaderComp = styled.form`
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     width: 298px;
 `,
     LayoutAddBtn = styled(ColorButton)`

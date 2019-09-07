@@ -61,6 +61,7 @@ const ListTitle = styled.h1`
     ::placeholder,
     ::-webkit-input-placeholder {
     color: #590303;
+    font-size: 18px;
     }
 `;
 
@@ -91,15 +92,17 @@ export default class MyTitle extends React.Component {
 
     getHtmlTag = () => {
         const {clicked, text} = this.state,
-            {color} = this.props;
+            {color, id} = this.props;
         if (clicked) {
             return (
                 <MyInput
                     color={color}
+                    id={`title${id}`}
                     onBlur={() => {
                         this.handleEnter({'key': 'Enter'});
                     }}
                     onKeyPress={this.handleEnter}
+                    onMouseOver={this.handleFocusFunction}
                     placeholder={text}
                     ref={this.titleRef}
                 />
@@ -110,6 +113,11 @@ export default class MyTitle extends React.Component {
                 {text}
             </span>
         );
+    }
+
+    handleFocusFunction = () => {
+        const {id} = this.props;
+        document.getElementById(`title${id}`).focus();
     }
 
     handleClick = () => {

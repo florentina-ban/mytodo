@@ -7,12 +7,15 @@ const CheckBox = styled.input`
     cursor: pointer;
     border: none;
     width: 20px;
-    height: 20px;    
+    height: 20px;   
+    margin: 0px;
 `,
     ListStyle = styled.li`
     list-style:none;
     margin:5px;
     text-align: center;
+    display: flex;
+    align-items: center;
 `,
     MyInput = styled.input`
     background-color: ${(props) => {
@@ -37,6 +40,7 @@ const CheckBox = styled.input`
     ::placeholder,
     ::-webkit-input-placeholder {
     color: #590303;
+    font-size: 15px;
     }
 `,
     MyTodoItem = styled.span`
@@ -68,8 +72,9 @@ const CheckBox = styled.input`
     }
 };
     display: inline-block;
-    width: 80%;
+    width: 60%;
     font-size: 15px;
+    
     
 `,
     WrapTag = styled.span`
@@ -135,11 +140,12 @@ export default class Todo extends React.Component {
             return (
                 <MyInput
                     color={color}
-                    id={id}
+                    id={`input${id}`}
                     onBlur={() => {
                         this.handleSaveModifiedTodo({'key': 'Enter'}, text);
                     }}
                     onKeyPress={this.handleSaveModifiedTodo}
+                    onMouseOver={this.handleFocusFunction}
                     placeholder={text}
                     ref={this.inputRef}
                     type="text"
@@ -158,6 +164,11 @@ export default class Todo extends React.Component {
         );
     }
 
+    handleFocusFunction = () => {
+        const {id} = this.props;
+        document.getElementById(`input${id}`).focus();
+    }
+
     handleSaveModifiedTodo = (event, text) => {
         const {id, modifyText} = this.props;
         if (event.key === 'Enter') {
@@ -174,21 +185,27 @@ export default class Todo extends React.Component {
         }
     }
 
+    getTheCheckbox = (checked) => {
+        const {id} = this.props,
+            htmlTag = <CheckBox
+                checked={Boolean(checked)}
+                id={id}
+                onChange={this.handleIsChecked}
+                type="checkbox" />;
+        return htmlTag;
+    }
+
     handleMouseOver = () => {
         const {mouseOver} = this.state;
         this.setState({'mouseOver': !mouseOver});
     }
 
     render () {
-        const {id, color} = this.props,
+        const {id, color, ck} = this.props,
             {mouseOver, text} = this.state;
         return (
             <ListStyle>
-                <CheckBox
-                    id={id}
-                    onChange={this.handleIsChecked}
-                    type="checkbox"
-                />
+                {this.getTheCheckbox(ck)}
                 <WrapTag
                     onMouseOut={this.handleMouseOver}
                     onMouseOver={this.handleMouseOver}

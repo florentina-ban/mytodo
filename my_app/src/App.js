@@ -2,7 +2,6 @@ import {generateLayoutId, getLayoutIds, getLayoutString} from './utils.js';
 import AddLayoutComp from './AddLayoutComp';
 import Layout from './Layout.js';
 import React from 'react';
-import generateId from './utils';
 import styled from 'styled-components';
 
 const AllLayouts = styled.form`
@@ -39,8 +38,7 @@ class App extends React.Component {
         });
         if (typeof text !== 'undefined') {
             if (text.length) {
-                const todoId = generateId([]);
-                store.setItem(`lista${id}`, `${todoId},${text},false`);
+                store.setItem(`title${id}`, `${text}`);
             }
         }
     }

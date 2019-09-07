@@ -16,6 +16,9 @@ const AllLayout = styled.h1`
     MyInput = styled.input`
     border : 0;
     outline: none;
+    ::-webkit-input-placeholder {
+        color: #590303;
+        font-size: 15px;
 `;
 export default class AddLayoutComp extends React.Component {
     static propTypes = {
@@ -48,19 +51,25 @@ export default class AddLayoutComp extends React.Component {
 
     getHtmlComp = () => {
         const {clicked} = this.state,
-            htmlComp = clicked
+            htmlTag = clicked
                 ? <MyInput
+                    id="one"
                     onBlur={this.handleClick}
                     onKeyPress={this.handleEnter}
+                    onMouseOver={() => {
+                        this.focusFunction();
+                    }}
                     placeholder="Add a new note.."
                     ref={this.inputRef}
                     type="text" />
                 : <span onClick={this.handleClick}>
                     {'Add a new note...'}
-                </span >;
-        return (
-            htmlComp
-        );
+                </span>;
+        return htmlTag;
+    }
+
+    focusFunction = () => {
+        document.getElementById('one').focus();
     }
 
     render () {

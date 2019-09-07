@@ -229,13 +229,6 @@ export default class Layout extends Component {
                             <LayoutAddBtn
                                 color={color}
                                 onClick={() => {
-                                    this.addLayout();
-                                }}
-                                value="+"
-                            />
-                            <LayoutAddBtn
-                                color={color}
-                                onClick={() => {
                                     deleteLayoutFunction(id);
                                 }}
                                 value="X"
